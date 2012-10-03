@@ -947,8 +947,9 @@ $(document).ready(function(){
 
 			drawBarChart(data);
 
-			var rPc = Math.round((repCount/(repCount + demCount)*1000))/10;
-      var dPc = 100 - rPc;
+			var totCount = repCount + demCount;
+			var rPc = Math.round((repCount/(totCount)*1000))/10;
+      		var dPc = Math.round((demCount/(totCount)*1000))/10;
 
      	//var piedata = [{"label":rPc+"%", "value":speakerWords['r']},{"label":dPc+"%", "value":speakerWords['d']}];
       console.log(demCount);
