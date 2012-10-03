@@ -88,7 +88,7 @@ a.jp-pause {
 
 .jp-progress {
     background: #706d6d; 
-    width:560px;
+    width:530px;
     height:10px;
     float:left;
     margin-top: 13px;
@@ -301,29 +301,25 @@ div.jp-video-full div.jp-video-play, div.jp-video-full div.jp-video-busy, div.jp
 .jp-quality a,
 .jp-quality-ctrl a{
     text-decoration : none; 
-    color:#fff;
+    color:#444;
     z-index: 9999;
+    line-height: 15px;
 }
 
 .jp-quality-ctrl ul{
     position:relative;
-    
-    background-image: -webkit-linear-gradient(top, rgb(209, 209, 209), rgb(242, 242, 242));
-    background-image: -moz-linear-gradient(top, rgb(209, 209, 209), rgb(242, 242, 242));
-    background-image: -o-linear-gradient(top, rgb(209, 209, 209), rgb(242, 242, 242));
-    background-image: -ms-linear-gradient(top, rgb(209, 209, 209), rgb(242, 242, 242));
-    background-image: linear-gradient(top, rgb(209, 209, 209), rgb(242, 242, 242));
-    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#d1d1d1', EndColorStr='#f2f2f2');
- 
     font-size:11px;
     font-family:Arial;
-    color:#444444;
+    color:#444;
     width: 24px;
-    height: 70px;
-    left:640px;
-    top:294px;
+    height: 104px;
+    left:684px;
+    top:256px;
     z-index: 9999;
-    padding: 8px 8px 0 8px;
+    padding: 0px 4px 0 8px;
+    background-color: #e0e0e0;
+    opacity: 0.7;
+    filter:alpha(opacity=70); 
 }
 
 .jp-video-full .jp-quality-ctrl ul {
