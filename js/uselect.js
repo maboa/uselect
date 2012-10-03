@@ -146,6 +146,23 @@ $(document).ready(function(){
 	var mediaDir = "http://happyworm.com/clientarea/aj/video";
 	var transcriptDir = "transcripts";  
 
+	var videoM = new Array();
+	var videoW = new Array();
+
+	// mp4
+
+	videoM['lo'] = "debate08.mp4";
+	videoM['me'] = "debate08.mp4";
+	videoM['hi'] = "debate08.mp4";
+	videoM['hd'] = "debate08.mp4";
+
+	// webm
+
+	videoW['lo'] = "debate08.webm";
+	videoW['me'] = "debate08.webm";
+	videoW['hi'] = "debate08.webm";
+	videoW['hd'] = "debate08.webm";
+
 	var latency = 1000;
         //console.log('start');                    
 		// Grab the script from the URL
@@ -170,6 +187,7 @@ $(document).ready(function(){
 		
 		
 	var currentyLoaded = "";
+	var currentTime = 0;
 	var hints = true;
 	var playSource = true;
 		
@@ -182,6 +200,7 @@ $(document).ready(function(){
 	$.jPlayer.timeFormat.showHour = true;
 
 	var i = 0;
+
 
 	if (theScriptState[i] != false) { 
 		 	while (theScriptState[i] != undefined) {
@@ -308,7 +327,10 @@ $(document).ready(function(){
 		myPlayer.bind($.jPlayer.event.ended, function() {  
 			// 
 		}); 
-		     
+
+		myPlayer.bind($.jPlayer.event.timeupdate, function(event) {       
+			currentTime = event.jPlayer.status.currentTime; 
+    });
 
 		/* load in the file */  
 
@@ -457,8 +479,9 @@ $(document).ready(function(){
 		function loadFile(id) { 
 			$('#main-loader').append('.');
 			var file = transcriptDir+'/'+id+'.htm'; 
-			var mediaMp4 = mediaDir+'/'+id+'.mp4';
-			var mediaWebM = mediaDir+'/'+id+'.webm';
+
+			var mediaMp4 = mediaDir+'/'+videoM['me'];
+			var mediaWebM = mediaDir+'/'+videoW['me'];
 			
 			//console.log('file = '+audioogg);
 			 
