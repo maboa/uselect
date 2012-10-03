@@ -332,7 +332,6 @@ $(document).ready(function(){
 
 		loadFile('debate08');
 		//$('#transcript-content').css('top','540px');
-		var prevTarget = null;
 
 		function initPopcorn(id) {   
 			var p = Popcorn(id)
@@ -346,7 +345,7 @@ $(document).ready(function(){
 
 		       	// DISABLED FOR TIME BEING.
 		       	// Will be doing the scrollTo bit in popcorn.transcript plugin.
-		       	return;
+		       	// return;
 
 		        var count = 0;
 		        return function (options) {
@@ -356,26 +355,10 @@ $(document).ready(function(){
 						var src = "";
 
 						//console.log("now="+now+" end="+end+" theScript.length="+theScript.length+" index="+index+"playSource="+playSource);
-
-						var $target = $("#transcript-content span.transcript-grey:first").parent(); // The paragraph of the word.
-						//$target = $target.prev().length ? $target.prev() : $target; // Select the previous paragraph if there is one.
-    
-    				// Transcript has progressed beyond last paragraph, select last. Prevents crash in jquery
-    				$target = $target.length ? $target : $("#transcript-content span").last().parent();
-
-    				//console.log($target.text());
-    
-    				if (prevTarget == null || ($target.text() != prevTarget.text())) {
-    					console.log('para change');
-    					$("#transcript-content").stop().scrollTo($target, 800, {axis:'y',margin:true,offset:{top:0}});
-    					prevTarget = $target;
-    				}
-    				
-
 					
 						if (now > end && playSource == false) {   
 
-          		myPlayer.jPlayer("pause");
+          		// myPlayer.jPlayer("pause"); // MJP: Looks like old code. Commented out.
 							index = parseInt(index);
 
 							// check for the end
