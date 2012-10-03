@@ -388,9 +388,45 @@ $(document).ready(function(){
 		    onEnd: function (options) {
 		         //console.log('end');
 		    }
+<<<<<<< HEAD
+			});  
+
+			$('.quality-switch').click(function(){
+				var timeOnClick = currentTime;
+				var quality = $(this).attr('q');
+				//myPlayer.jPlayer('setMedia', {m4v: video[quality]});
+				//myPlayer.jPlayer('play',timeOnClick);
+				$('.jp-quality-ctrl').fadeOut();
+				$('.quality-btn').hide();
+				$('.quality-btn[q="'+quality+'"]').show();
+				//$('.jp-video-busy').show();
+
+				_gaq.push(['_trackEvent', 'USElect', 'Quality button', 'switched to '+$(this).attr('q')]);
+
+				return false;
+			})	
+
+			$('.quality-btn').click(function(){
+
+				if ($('.jp-quality-ctrl').is(':visible')) { 
+
+					$('.jp-quality-ctrl').fadeOut();
+					$('.fs-quality-ctrl').fadeOut();
+					
+				} else {
+					$('.jp-quality-ctrl').fadeIn();
+				}
+
+				_gaq.push(['_trackEvent', 'USElect', 'Quality button', 'clicked']);
+
+				return false;
+			});
+
+=======
 			}); 
 			return p; 
 		};
+>>>>>>> 0b7bc7520c0fa95e9035ee3470d933a8aa69a081
 
 		function initTranscript(p) {
 			$("#transcript-content span").each(function(i) {  
