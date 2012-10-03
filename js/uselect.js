@@ -177,25 +177,21 @@ $(document).ready(function(){
 		
 	var myPlayer = $("#jquery_jplayer_1");
 	
-	
 	myPlayer.jPlayer({
- 		ready: function (event) {
-  
+		ready: function (event) {
 			if(event.jPlayer.html.used && event.jPlayer.html.video.available) {
-					//checkStartParam();
-					//checkKeywordParam();
+				//checkStartParam();
+				//checkKeywordParam();
 			}
-    }, 
-  			
+		}, 
 		solution: "html, flash",
-    swfPath: "js",
-    supplied: "m4v,webmv",
-    poster: "poster.png",
+		swfPath: "js",
+		supplied: "m4v,webmv",
 		preload: "auto",
 		size: {width: "720px", height:"405px"}
-    //errorAlerts: "true",
+		//errorAlerts: "true",
 		//warningAlerts: "true"
-  });  
+	});  
 
 	$.jPlayer.timeFormat.showHour = true;
 
@@ -343,9 +339,7 @@ $(document).ready(function(){
 		       },
 		       onFrame: (function () {
 
-		       	// DISABLED FOR TIME BEING.
-		       	// Will be doing the scrollTo bit in popcorn.transcript plugin.
-		       	// return;
+				// Warning: This might start polling before the transcript is loaded and ready.
 
 		        var count = 0;
 		        return function (options) {
@@ -453,20 +447,20 @@ $(document).ready(function(){
 			currentlyPlaying = id;
 
 			//$('.direct').html('loading ...');
-			   
-      $('#load-status').html('loading ...');
+
+			initPopcorn('#' + myPlayer.data("jPlayer").internal.video.id);   
+			// load in the audio
+			myPlayer.jPlayer("setMedia", {
+				m4v: mediaMp4,
+				webmv: mediaWebM,
+				poster: "poster.png"
+			});
+
+			$('#load-status').html('loading ...');
 			$('#transcript-content').load(file, function() {
 			  	//load success!!!     
-				initPopcorn('#' + myPlayer.data("jPlayer").internal.video.id);   
 				$('#main-loader').append('.');
-				// load in the audio
 
-			  myPlayer.jPlayer("setMedia", {
-	        m4v: mediaMp4,
-	        webmv: mediaWebM,
-	        poster: "poster.png"
-	      });   
-	
 				$.data(myPlayer,'mediaId',id);
 				$('#load-status').html('');
 
