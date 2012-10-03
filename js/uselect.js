@@ -647,7 +647,7 @@ $(document).ready(function(){
 
 		$("#searchStr").keydown(function(e) {
     	if(e.which == 13) {
-    		//$('#search-btn').trigger('click');
+    		$('#search-btn').trigger('click');
         return false;
     	}
 		});
