@@ -824,7 +824,7 @@ $(document).ready(function(){
 				end = -1;
 				index = 0;*/
 
-				_gaq.push(['_trackEvent', 'USElect', 'Search ', 'Keyword(s) ='+searchStr]);
+				
 				
 			});
 
@@ -904,6 +904,8 @@ $(document).ready(function(){
 			$('#demWords').text(demCount+" mentions");
 
 			$('#pieTitle').text($('#searchStr').val());
+
+			_gaq.push(['_trackEvent', 'USElect', 'Search ', 'Keyword(s) ='+searchStr]);
 
 			return false;
 		});
