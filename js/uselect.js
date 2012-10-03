@@ -343,6 +343,11 @@ $(document).ready(function(){
 		         //console.log('start')
 		       },
 		       onFrame: (function () {
+
+		       	// DISABLED FOR TIME BEING.
+		       	// Will be doing the scrollTo bit in popcorn.transcript plugin.
+		       	return;
+
 		        var count = 0;
 		        return function (options) {
 					
@@ -412,7 +417,11 @@ $(document).ready(function(){
 				p.transcript({
 					time: $(this).attr("m") / 1000, // seconds
 					futureClass: "transcript-grey",
-					target: this
+					target: this,
+					onNewPara: function(parent) {
+						console.log('para change');
+						$("#transcript-content").stop().scrollTo($(parent), 800, {axis:'y',margin:true,offset:{top:0}});
+					}
 				});  
 			});
 		};
