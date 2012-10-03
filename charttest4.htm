@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    td {
+      width: 40px;
+      text-align: right;
+    }
+    #chart {
+      font-size: 12px;
+    }
+
+    .rule line {
+stroke: #fff;
+stroke-opacity: .2;
+shape-rendering: crispEdges;
+}
+  </style>
+	<script type="text/javascript" src="js/d3.min.js"></script>  
+
+	<script type="text/javascript">
+	window.onload = function(){ 
+var data = [{time: '0-5', s1: 4, s2: 3},
+            {time: '5-10', s1: 3, s2: 3},
+            {time: '10-15', s1: 1, s2: 5},
+            {time: '15-20', s1: 4, s2: 3},
+            {time: '20-25', s1: 5, s2: 5},
+            {time: '25-30', s1: 5, s2: 0},
+            {time: '35-40', s1: 5, s2: 1},
+            {time: '45-50', s1: 3, s2: 2},
+            {time: '55-60', s1: 5, s2: 4},
+            {time: '60-65', s1: 3, s2: 2},
+            {time: '65-70', s1: 3, s2: 6},
+            {time: '70-75', s1: 3, s2: 2},
+            {time: '75-80', s1: 3, s2: 1},
+            {time: '80-85', s1: 5, s2: 0},
+            {time: '85-90', s1: 5, s2: 1},
+            {time: '90-95', s1: 5, s2: 3}
+            ];
+
+data = [{s:'1'},{s:'2'},{s:'3'},{s:'4'},{s:'1'},{s:'2'},{s:'3'},{s:'0'},{s:'5'},{s:'6'},{s:'1'},{s:'1'},{s:'1'},{s:'1'},{s:'1'},{s:'1'},{s:'2'},{s:'5'},{s:'2'},{s:'1'},
+        {s:'1'},{s:'2'},{s:'3'},{s:'4'},{s:'1'},{s:'2'},{s:'3'},{s:'4'},{s:'0'},{s:'6'},{s:'1'},{s:'1'},{s:'1'},{s:'1'},{s:'1'},{s:'1'},{s:'2'},{s:'5'},{s:'2'},{s:'1'}];
+
+
+var barWidth = 16;
+var width = (barWidth + 4) * data.length;
+var height = 100;
+
+var colorlist = ["maroon", "darkblue"];
+var paddingList = [1,-1];
+
+var x = d3.scale.linear().domain([0, data.length]).range([0, width]);
+var y = d3.scale.linear().domain([0, d3.max(data, function(datum) { return datum.s; })]).
+  rangeRound([0, height]);
+
+// add the canvas to the DOM
+var padding = 30;
+var barDemo = d3.select("#chart").
+  append("svg:svg").
+  attr("width", width).
+  attr("height", height + padding);
+
+
+barDemo.selectAll("rect").
+  data(data).
+  enter().
+  append("svg:rect").
+
+  attr("x", function(datum, index) { return x(index) + paddingList[index % 2]; }).
+  attr("y", function(datum) { return height - y(datum.s); }).
+  attr("width", barWidth).
+  transition().delay(function (d,i){ return i * 300;}).duration(300).
+  attr("height", function(datum) { return y(datum.s); }).
+  attr("fill", function(d, i) { return colorlist[i % 2]; });
+
+// text on bars
+
+barDemo.selectAll("text").
+  data(data).
+  enter().
+  append("svg:text").
+  attr("x", function(datum, index) { return x(index) + barWidth; }).
+  attr("y", function(datum) { return height - y(datum.s); }).
+  attr("dx", -barWidth/2).
+  attr("dy", "1em").
+  attr("text-anchor", "middle").
+  text(function(datum) { return datum.s;}).
+  attr("fill", "white");
+
+
+
+    var rules = barDemo.append("g");
+
+
+    // Add rules 
+  rules = rules.selectAll(".rule")
+   .data(y.ticks(5))
+    .enter().append("g")
+    .attr("class", "rule")
+    .attr("transform", function(d) { return "translate(0," + y(d) + ")"; });
+  
+  rules.append("line")
+        .attr("x2", width);
+}
+    </script>
+</head>
+<body>
+<div id="chart" style="height:100px;width:800px"></div>
+<div style="height:50px;width:800px;font-size:12px">
+  <table style="width:800px">
+    <tr>
+      <td>5</td>
+      <td>10</td>
+      <td>15</td>
+      <td>20</td>
+      <td>25</td>
+      <td>30</td>
+      <td>35</td>
+      <td>40</td>
+      <td>45</td>
+      <td>50</td>
+      <td>55</td>
+      <td>60</td>
+      <td>65</td>
+      <td>70</td>
+      <td>75</td>
+      <td>80</td>
+      <td>85</td>
+      <td>90</td>
+      <td>95</td>
+      <td></td>
+    </tr>
+  </table>
+  </div>
+</body>
