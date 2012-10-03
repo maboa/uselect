@@ -312,7 +312,7 @@ $(document).ready(function(){
     	e.stopImmediatePropagation();*/
 			//console.log('click');
 
-    
+    	_gaq.push(['_trackEvent', 'USElect', 'Word clicked', 'word '+$(this).text()]);
 		   
 			return false;
 		});     
@@ -444,6 +444,8 @@ $(document).ready(function(){
     	$target = $target.length ? $target : $("#transcript-content span").last().parent();
     
     	$("#transcript-content").stop().scrollTo($target, 1000, {axis:'y',margin:true});
+
+    	_gaq.push(['_trackEvent', 'USElect', 'Bar chart clicked', 'Bar '+gIndex]);
 
 			return false;
 		});
@@ -585,6 +587,8 @@ $(document).ready(function(){
 				$('.share-snippet').append(theTweet);  
 				$('#tweet-like').empty();
 				$('#tweet-like').append('<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script><a data-url="" data-text="'+theTweet+'" href="http://twitter.com/share?url=x" class="twitter-share-button">Tweet</a>');  
+
+				_gaq.push(['_trackEvent', 'USElect', 'Tweet generated', 'Tweet content '+theTweet]);
 			} 
 		}); 
 
@@ -810,7 +814,7 @@ $(document).ready(function(){
 				end = -1;
 				index = 0;*/
 
-
+				_gaq.push(['_trackEvent', 'USElect', 'Search ', 'Keyword(s) ='+searchStr]);
 				
 			});
 
