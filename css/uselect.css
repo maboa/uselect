@@ -1,0 +1,240 @@
+body {
+	/*overflow: hidden;*/
+	font: 16px/24px "Droid Serif", Georgia, Times, serif;
+	background: #fcfcfc;
+	color: #444;
+	width: 1000px;
+}
+
+#logo {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 200;
+}
+
+.hint {
+	background-color: #ff0;
+	padding: 12px 16px 12px 16px;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 12px;
+	line-height: 14px;
+	height: 100%;
+}
+
+.hint:hover {
+	cursor: pointer;
+}
+
+a {
+	text-decoration: none;
+	color: #f07d00;
+}
+
+a:hover {
+	text-decoration: underline;
+	color: #666;
+}
+
+li {
+	list-style: none;
+}
+
+ul {
+	padding-left: 12px;
+}
+
+#control-hldr {
+	z-index: 100;
+	height: 48px;
+	position: absolute;
+	width: 1000px;
+	background-color: #FCC95C;
+	color: #000;
+	position: absolute;
+	font-weight: bold;
+}
+
+.control {
+	padding: 12px 12px 12px 76px;
+	white-space: nowrap;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.header-ctrl {
+	padding-right: 16px;
+	float: right;
+}
+
+
+#transcript-content span, #target-content span  {
+	cursor: pointer;
+}    
+
+#transcript-content span.transcript-grey:hover, #target-content span.transcript-grey:hover {  
+	color: #f9b72b; 
+}
+   
+
+#transcript-content span:hover, #target-content span:hover  {  
+	color: #f9b72b; 
+}
+
+#transcript-content span.highlight, #target-content span.highlight {  
+	color: #fff; 
+}       
+
+#transcript-content span.transcript-grey, #target-content span.transcript-grey {
+   color: #888;
+}  
+
+#transcript-content {
+	top: 480px;
+}
+
+/* Generic pane rules */
+body { margin: 0; -webkit-text-size-adjust: 100%; }
+.page { left: 0; right: 0; top: 0; bottom: 0; }
+.row, .col, .page { overflow: hidden; position: absolute; }
+.row { left: 0; right: 0; }
+.col { top: 0; bottom: 0; border-left: 4px solid #eee;}
+.scroll-y { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.fill, .pane { position: absolute; left: 0; top: 0; right: 0; bottom: 0; width: 100%; height: 100% }
+.pane { display: none; }
+
+
+/* Workaround: in landscape mode, IEMobile makes bottom toolbar overlap the page, so shorten the page by 75px to compensate */
+.iemobile .page { bottom: -6px; }
+@media screen and (orientation:landscape) { .iemobile .page { bottom: 75px; } }
+
+.header, .footer {
+    color: #444; background: #eee;
+}
+.header { font-size: 16px; }
+.body, .pane { background: #fcfcfc; }
+.right.col .body { padding: 0 16px; }
+.middle.col .body { padding: 0 16px; }
+.listview { padding-top: 16px; padding-left: 0px; margin: 0; font-weight: bold; color: #444; }
+.listview li { 
+	list-style-type: none; 
+	background: #fcfcfc; 
+	padding-left: 16px; 
+	cursor: pointer; 
+	font-size: 14px; 
+}
+.listview li.selected { background-color: #37F; color: White; }
+.left, .header.row {
+	font-family: 'Helvetica Neue', Arial, Sans-Serif;
+	border-right: 1px solid #eee;
+}
+
+.header {
+	font-size: 12px;
+	font-weight: bold;
+	padding-left: 16px;
+}
+
+
+/* Pane configuration */
+
+.middle.col { width: 752px; }
+.right.col { left: 756px; width: 239px; font-size: 15px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;line-height:20px;}
+.header.row { top: 48px; height: 30px; }
+.body.row { top: 50px; bottom: 120px; }
+.footer.row { height: 120px; bottom: 0px;}
+
+#corner-text {
+	padding: 0 16px;
+}
+
+
+.media-hldr {
+	position:absolute;
+	top: 50px;
+	padding: 16px;
+}
+
+.right-panel {
+	background-color: #eee;
+	text-align: center;
+	padding-bottom: 8px;
+	margin-top: 8px;
+}
+
+
+.table-talk {
+	width:100%;
+	font-size: 15px;	
+	cellpadding: 0;
+	cellspacing: 0;
+	border: 0;
+}
+
+.table-talk td {
+	text-align: center;
+}
+
+#pie-talk {
+	padding-bottom:8px;
+}
+
+.table-bar td {
+	text-align: right;
+	width: 18px;
+}
+
+.panel-title {
+	background-color: #f9b72b;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 15px;	
+	font-weight: bold;
+}
+
+.share-snippet {
+	padding: 8px;
+	font-family: "Droid Serif", Georgia, Times, serif;
+	font-style: italic;
+	text-align: left;
+	word-wrap:break-word;
+}
+
+#tweet-like {
+	text-align: right;
+}
+
+#about {
+	text-align: left;
+	background-color: #fff;
+	padding-top: 4px;
+}
+
+#chart svg {
+  font: 10px sans-serif;
+}
+
+#chart text.title {
+  font: 300 78px Helvetica Neue;
+  fill: #666;
+  cursor: pointer;
+}
+
+#chart text {
+	cursor: pointer;
+}
+
+#chart .rule line {
+  stroke: #fff;
+  stroke-opacity: .2;
+  shape-rendering: crispEdges;
+}
+
+#chart rect {
+	cursor: pointer;
+}
+
+#main-loader {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 50px;
+	padding-top: 300px;
+	text-align: center;
+}

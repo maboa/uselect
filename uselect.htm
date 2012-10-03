@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset=utf-8 />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<link href="css/uselect.css" rel="stylesheet" type="text/css" />
+		<link href="skin/uselect-skin.css" rel="stylesheet" type="text/css" />
+		<link rel="icon" href="favicon.ico" type="image/x-icon"> 
+		<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> 
+
+	</head>
+	<body>
+
+		<div id="logo">
+			<img src="uslogo.png">
+		</div>
+
+		<div id="control-hldr">
+
+			<div class="control">
+				US Presidential Debate - Domestic Policy (Oct 3)
+			</div>
+		</div>
+
+
+		<!-- transcript content -->
+
+		<div id="transcript" class="middle col">
+
+			<!-- video display (when required) -->
+
+			<div id="media-content" class="media-hldr">
+				<div id="jp_container_1" class="jp-video jp-video-360p" style="display:none">
+					<div id="jquery_jplayer_1" class="jp-jplayer"></div>
+					<div class="jp-gui">
+			    	<div class="jp-video-play" style="display:none">
+			    		<span class="jp-video-play-icon"><img src="video-play.png"/></span>
+			    	</div>
+
+			    	<div class="jp-video-busy" style="display:none">
+			    		<span class="jp-video-busy-icon"><img src="ajax-loader.gif"/></span>
+			    	</div>
+
+
+			    	<!--<div class="jp-screen-loader"></div>-->
+			      <div class="jp-interface">
+			        <div class="jp-controls-holder">
+										<!--play and pause buttons-->
+								<a href="#" class="jp-play" tabindex="1">play</a>
+								<a href="#" class="jp-pause" tabindex="1">pause</a>
+								<span class="separator sep-1"></span>
+									 
+								<!--progress bar-->
+								<div class="jp-progress">
+									<div class="jp-seek-bar">
+									  <div class="jp-play-bar"><span id="jp-play-drag"></span></div>
+									</div>
+								</div>
+									 
+								<!--time -->
+								<div class="jp-current-time"></div>
+								<span class="time-sep">/</span>
+								<div class="jp-duration"></div>
+								
+									 
+			        </div><!--end jp-controls-holder-->
+			      </div><!--end jp-interface-->
+			    </div><!--end jp-gui-->
+		    </div><!--end jp_container_1-->
+			</div>
+
+			<div id="main-loader">Loading</div>
+
+			<div id="transcript-content" class="body row scroll-y">
+
+			</div>
+
+			<div class="footer row">
+				<p></p>
+				<div id="chart" style="padding-left:16px;height:70px;width:736px">
+				</div>
+				<div style="height:50px;width:736px;font-size:12px;padding:0px 16px">
+				  <table width="100%" class="table-bar" style="width:736px;padding:0px" cellspacing="0" cellpadding="0">
+				    <tr>
+				      <td>5</td>
+				      <td>10</td>
+				      <td>15</td>
+				      <td>20</td>
+				      <td>25</td>
+				      <td>30</td>
+				      <td>35</td>
+				      <td>40</td>
+				      <td>45</td>
+				      <td>50</td>
+				      <td>55</td>
+				      <td>60</td>
+				      <td>65</td>
+				      <td>70</td>
+				      <td>75</td>
+				      <td>80</td>
+				      <td>85</td>
+				      <td>90</td>
+				      <td>95</td>
+				      <td></td>
+				    </tr>
+				  </table>
+				</div>
+			</div>
+		</div>
+
+		<!-- target content -->
+
+		<div class="right col">
+
+			<div id="target-content" class="body row">
+				<div id="about" class="right-panel">
+
+						Navigate the debate by clicking on the transcript.
+
+				</div>
+				
+
+				<p>
+					<div class="right-panel">
+						<div class="panel-title">
+							Keyword(s) Search
+						</div>
+						<form>
+							<p><input id="searchStr" type="text" style="width:160px;border:0"/></p>
+							<div style="display:none">
+							<p>Spoken by:</p>
+							<p>
+								<input id="repCb" type="checkbox" checked="checked" name="speaker" value="Romney">Romney
+								<input id="demCb" type="checkbox" checked="checked" name="speaker" value="Obama">Obama
+							</p>
+							</div>
+							<input id="search-btn" type="button" value="search transcript">
+						</form>
+					</div>
+				</p>
+				<p>
+					<div class="right-panel">
+						<div id="pieTitle" class="panel-title">
+							Total Words
+						</div>
+						<table class="table-talk">
+							<tr>
+								<td>
+									Romney
+								</td>
+								<td>
+									Obama
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<span id="repWords"></span>
+								</td>
+								<td>
+									<span id="demWords"></span>
+								</td>
+							</tr>
+						</table>
+						<!--<div id="pie-talk"></div>-->
+						<div style="height:120px" id="pie-chart"><span style="line-height:100px">Loading ...</span></div>
+					</div>
+				</p>
+				<p>
+					<!--<span class="bar">1:4,2:3,3:2,4:1</span>-->
+					<div class="right-panel">
+						<div class="panel-title">
+							Share
+						</div>
+						<div class="share-snippet">Highlight a piece of the transcript to share the correpsonding part of the video.</div>
+						<div id="tweet-like">
+						</div>
+					</div>
+				</p>
+			</div>
+
+			<div id="corner-text" class="footer row">
+				<p>The chart on the left represents the times within 5 minute slots each speaker mentions a certain word or phrase.</p>
+			</div>
+		</div>
+
+
+
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/jquery.jplayer.js"></script>      
+		<script type="text/javascript" src="js/jquery.scrollto.min.js"></script>
+		<script type="text/javascript" src="js/d3.min.js"></script>  
+		<script type="text/javascript" src="js/popcorn.js"></script> 
+		<script type="text/javascript" src="js/popcorn.transcript.js"></script> 
+		<script type="text/javascript" src="js/jquery.bbq.js"></script>   
+		<script type="text/javascript" src="js/iemobile-fix.js"></script>
+		<script type="text/javascript" src="js/uselect.js"></script>
+
+		<!-- GA @start code -->
+		<script type="text/javascript">
+
+	  var _gaq = _gaq || [];
+	  _gaq.push(['_setAccount', 'UA-30542235-1']); // aljazeera.com
+	  
+	  _gaq.push(['_trackPageview']);
+
+	  (function() {
+	    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	  })();
+
+		</script>
+		<!-- GA @end code -->
+	</body>
+</html>
