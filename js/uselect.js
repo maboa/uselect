@@ -392,6 +392,37 @@ $(document).ready(function(){
 			return p; 
 		};
 
+		$('.quality-switch').click(function(){
+			var timeOnClick = currentTime;
+			var quality = $(this).attr('q');
+			//myPlayer.jPlayer('setMedia', {m4v: video[quality]});
+			//myPlayer.jPlayer('play',timeOnClick);
+			$('.jp-quality-ctrl').fadeOut();
+			$('.quality-btn').hide();
+			$('.quality-btn[q="'+quality+'"]').show();
+			//$('.jp-video-busy').show();
+
+			_gaq.push(['_trackEvent', 'USElect', 'Quality button', 'switched to '+$(this).attr('q')]);
+
+			return false;
+		})	
+
+		$('.quality-btn').click(function(){
+
+			if ($('.jp-quality-ctrl').is(':visible')) { 
+
+				$('.jp-quality-ctrl').fadeOut();
+				$('.fs-quality-ctrl').fadeOut();
+					
+			} else {
+				$('.jp-quality-ctrl').fadeIn();
+			}
+
+			_gaq.push(['_trackEvent', 'USElect', 'Quality button', 'clicked']);
+
+			return false;
+		});		
+
 		function initTranscript(p) {
 			$("#transcript-content span").each(function(i) {  
 				p.transcript({
