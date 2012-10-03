@@ -401,8 +401,10 @@ $(document).ready(function(){
 		$('.quality-switch').click(function(){
 			var timeOnClick = currentTime;
 			var quality = $(this).attr('q');
-			//myPlayer.jPlayer('setMedia', {m4v: video[quality]});
-			//myPlayer.jPlayer('play',timeOnClick);
+			var mediaMp4 = mediaDir+'/'+videoM[quality];
+			var mediaWebM = mediaDir+'/'+videoW[quality];
+			myPlayer.jPlayer('setMedia', {m4v: mediaMp4, webmv: mediaWebM});
+			myPlayer.jPlayer('play',timeOnClick);
 			$('.jp-quality-ctrl').fadeOut();
 			$('.quality-btn').hide();
 			$('.quality-btn[q="'+quality+'"]').show();
