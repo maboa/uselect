@@ -177,23 +177,7 @@ $(document).ready(function(){
 		
 	var myPlayer = $("#jquery_jplayer_1");
 	
-	myPlayer.jPlayer({
-		ready: function (event) {
-			if(event.jPlayer.html.used && event.jPlayer.html.video.available) {
-				//checkStartParam();
-				//checkKeywordParam();
-			}
-		}, 
-		solution: "html, flash",
-		swfPath: "js",
-		supplied: "m4v,webmv",
-		preload: "auto",
-		size: {
-			width: "720px",
-			height:"405px",
-			cssClass: "jp-video-360p"
-		}
-	});  
+	// moved jPlayer instancing to loadFile()
 
 	$.jPlayer.timeFormat.showHour = true;
 
@@ -482,41 +466,63 @@ $(document).ready(function(){
 
 			//$('.direct').html('loading ...');
 
-			var p = initPopcorn('#' + myPlayer.data("jPlayer").internal.video.id);   
-			// load in the audio
-			myPlayer.jPlayer("setMedia", {
-				m4v: mediaMp4,
-				webmv: mediaWebM,
-				poster: "poster.png"
-			});
+			var p, loadTrans = function() {
+				$('#load-status').html('loading ...');
+				$('#transcript-content').load(file, function() {
+				  	//load success!!!     
 
-			$('#load-status').html('loading ...');
-			$('#transcript-content').load(file, function() {
-			  	//load success!!!     
+					initTranscript(p);
 
-				initTranscript(p);
+					$('#main-loader').append('.');
 
-				$('#main-loader').append('.');
+					$.data(myPlayer,'mediaId',id);
+					$('#load-status').html('');
 
-				$.data(myPlayer,'mediaId',id);
-				$('#load-status').html('');
+					if (hints == true) {
+						$('#transcript-content-hint').fadeIn('slow');
+						$('#transcript-file-hint').fadeOut('slow');
+					}
+					
+					$('#source-header-ctrl').fadeIn();
+					//console.log('loaded');
+					
+					countWords();
 
-				if (hints == true) {
-					$('#transcript-content-hint').fadeIn('slow');
-					$('#transcript-file-hint').fadeOut('slow');
+					checkStartParam();
+					checkKeywordParam();
+					//$('.jp-video-busy').show();
+					//$('#transcript').animate({scrollTop: $("#page").offset().top}, 2000);
+			
+				});
+			};
+
+			myPlayer.jPlayer({
+				ready: function (event) {
+					if(event.jPlayer.html.used && event.jPlayer.html.video.available) {
+						p = initPopcorn('#' + myPlayer.data("jPlayer").internal.video.id);
+					} else {
+						$(this).jPlayer('option', 'emulateHtml', true);
+						p = initPopcorn('#' + myPlayer.attr('id'));
+					}
+					$(this).jPlayer("setMedia", {
+						m4v: mediaMp4,
+						webmv: mediaWebM,
+						poster: "poster.png"
+					});
+					setTimeout(function() {
+						loadTrans();
+					}, 1000);
+				},
+				solution: "html, flash",
+				swfPath: "js",
+				supplied: "m4v,webmv",
+				preload: "auto",
+				size: {
+					width: "720px",
+					height:"405px",
+					cssClass: "jp-video-360p"
 				}
-				
-				$('#source-header-ctrl').fadeIn();
-				//console.log('loaded');
-				
-				countWords();
-
-				checkStartParam();
-				checkKeywordParam();
-				//$('.jp-video-busy').show();
-				//$('#transcript').animate({scrollTop: $("#page").offset().top}, 2000);
-		
-			});		
+			});
 		} 
 		
 
