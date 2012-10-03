@@ -421,6 +421,31 @@ $(document).ready(function(){
 			});
 		}
 
+		// Reviewed recursively async adding the plugins to avoid lock up at start.
+		// It worked, but took a long time to complete.
+		// Plus, you could scroll down in text way ahead of this function loop and click on word, which kinda broke it...
+		// As it was not setup for that word yet.
+		function initTranscriptAsync(p) {
+			var $trans = $("#transcript-content span");
+			var asyncTrans = function(i) {
+				if(i < $trans.length) {
+					p.transcript({
+						time: $($trans[i]).attr("m") / 1000, // seconds
+						futureClass: "transcript-grey",
+						target: $trans[i],
+						onNewPara: function(parent) {
+							console.log('para change');
+							$("#transcript-content").stop().scrollTo($(parent), 800, {axis:'y',margin:true,offset:{top:0}});
+						}
+					});
+					setTimeout(function() {
+						asyncTrans(i+1);
+					},0);
+				}
+			};
+			asyncTrans(0);
+		}
+
 		$('rect,text').live('click',function(e){
 			console.dir($(this));
 			var top = $('#chart').offset().top;
