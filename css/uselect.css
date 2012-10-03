@@ -234,7 +234,7 @@ body { margin: 0; -webkit-text-size-adjust: 100%; }
 
 #main-loader {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font-size: 50px;
-	padding-top: 300px;
+	font-size: 20px;
+	padding-top: 80px;
 	text-align: center;
 }
