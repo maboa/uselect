@@ -188,9 +188,11 @@ $(document).ready(function(){
 		swfPath: "js",
 		supplied: "m4v,webmv",
 		preload: "auto",
-		size: {width: "720px", height:"405px"}
-		//errorAlerts: "true",
-		//warningAlerts: "true"
+		size: {
+			width: "720px",
+			height:"405px",
+			cssClass: "jp-video-360p"
+		}
 	});  
 
 	$.jPlayer.timeFormat.showHour = true;
@@ -386,10 +388,11 @@ $(document).ready(function(){
 		    onEnd: function (options) {
 		         //console.log('end');
 		    }
-			});  
+			}); 
+			return p; 
+		};
 
-			
-
+		function initTranscript(p) {
 			$("#transcript-content span").each(function(i) {  
 				p.transcript({
 					time: $(this).attr("m") / 1000, // seconds
@@ -401,7 +404,7 @@ $(document).ready(function(){
 					}
 				});  
 			});
-		};
+		}
 
 		$('rect,text').live('click',function(e){
 			console.dir($(this));
@@ -448,7 +451,7 @@ $(document).ready(function(){
 
 			//$('.direct').html('loading ...');
 
-			initPopcorn('#' + myPlayer.data("jPlayer").internal.video.id);   
+			var p = initPopcorn('#' + myPlayer.data("jPlayer").internal.video.id);   
 			// load in the audio
 			myPlayer.jPlayer("setMedia", {
 				m4v: mediaMp4,
@@ -459,6 +462,9 @@ $(document).ready(function(){
 			$('#load-status').html('loading ...');
 			$('#transcript-content').load(file, function() {
 			  	//load success!!!     
+
+				initTranscript(p);
+
 				$('#main-loader').append('.');
 
 				$.data(myPlayer,'mediaId',id);
@@ -473,9 +479,6 @@ $(document).ready(function(){
 				//console.log('loaded');
 				
 				countWords();
-
-
-				$('#jp_container_1').show();
 
 				checkStartParam();
 				checkKeywordParam();
