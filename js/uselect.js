@@ -11,6 +11,9 @@ $(document).ready(function(){
 
 	var maxData = 0;
 
+	// NB: IE8 D3 support https://github.com/mbostock/d3/issues/619
+	// Added Sizzle and es5-shim, but fails silently in IE8.
+
 	function drawPieChart(data) {
 		$('#pie-chart').empty();
 		var w = 120,                        //width
