@@ -606,7 +606,7 @@ $(document).ready(function(){
 						loadTrans();
 					}, 1000);
 				},
-				seeking: function() {
+				seek: function() {
 					$('.jp-video-busy').show();
 				},
 				seeked: function() {
