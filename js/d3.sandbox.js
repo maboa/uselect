@@ -81,6 +81,9 @@ $(document).ready(function(){
 			};
 		}
 
+		// Note that in the actual uselect.js code I swaped the vars round.
+		// Reasoning... The pie starts at top and goes clockwise. So Dem is 1st in the list. ie., on right side.
+		// Isn't dem classed as left? Anywayz... Ramblings of a dev. Carry on.
 		updatePieChart = function(repCount, demCount) {
 
 			var totCount = repCount + demCount,
@@ -97,6 +100,12 @@ $(document).ready(function(){
 				rPc = "";     	
 			} else {
 				rPc = rPc + "%";
+			}
+
+			// Avoid zero data
+			if(!demCount && !repCount) {
+				demCount = 1;
+				repCount = 1;
 			}
 
 			// var piedata = [{"label":dPc, "value":demCount},{"label":rPc, "value":repCount}];
@@ -135,6 +144,18 @@ $(document).ready(function(){
 	});
 	$('#pie-d').click(function() {
 		updatePieChart(90, 15);
+		return false;
+	});
+	$('#pie-e').click(function() {
+		updatePieChart(1, 0);
+		return false;
+	});
+	$('#pie-f').click(function() {
+		updatePieChart(0, 1);
+		return false;
+	});
+	$('#pie-g').click(function() {
+		updatePieChart(0, 0);
 		return false;
 	});
 
