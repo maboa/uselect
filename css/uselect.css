@@ -181,8 +181,9 @@ body { margin: 0; -webkit-text-size-adjust: 100%; }
 }
 
 .table-bar td {
-	text-align: right;
-	width: 18px;
+	text-align: center;
+	width: 32px;
+	padding-right:4px;
 }
 
 .panel-title {
