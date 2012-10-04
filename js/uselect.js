@@ -224,7 +224,8 @@ $(document).ready(function(){
 
 		
 	var theScript = [];  
-	var mediaDir = "http://bc05.ajnm.me/665003303001";
+	var mediaDirM = "http://bc05.ajnm.me/665003303001";
+	var mediaDirW = "http://webapps.aljazeera.net/aje/custom/debate/d1";
 	var transcriptDir = "transcripts";  
 
 	var videoM = new Array();
@@ -239,10 +240,10 @@ $(document).ready(function(){
 
 	// webm
 
-	videoW['lo'] = "debate08.webm";
-	videoW['me'] = "debate08.webm";
-	videoW['hi'] = "debate08.webm";
-	videoW['hd'] = "debate08.webm";
+	videoW['lo'] = "debate.webm";
+	videoW['me'] = "debate.webm";
+	videoW['hi'] = "debate.webm";
+	videoW['hd'] = "debate.webm";
 
 	var latency = 1000;
         //console.log('start');                    
@@ -298,8 +299,8 @@ $(document).ready(function(){
 				
 				//var id = theScriptState[i].m;
         var file = transcriptDir+'/'+timespan.m+'.htm'; 
-				var mediaMp4 = mediaDir+'/'+timespan.m+'.mp4';
-				var mediaWebM = mediaDir+'/'+timespan.m+'.webm';
+				var mediaMp4 = mediaDirM+'/'+timespan.m+'.mp4';
+				var mediaWebM = mediaDirW+'/'+timespan.m+'.webm';
 				
 				//console.log('file = '+audioogg);       
 				//console.log(myPlayer.data('jPlayer').status.src);
@@ -323,7 +324,8 @@ $(document).ready(function(){
 						// load in the audio      
 
 				  	myPlayer.jPlayer("setMedia", {
-		        	m4v: mediaMp4
+		        	m4v: mediaMp4,
+		        	webmv: mediaWebM
 		      	});
 
 						$.data(myPlayer,'mediaId',timespan.m);
@@ -481,9 +483,9 @@ $(document).ready(function(){
 		$('.quality-switch').click(function(){
 			var timeOnClick = currentTime;
 			var quality = $(this).attr('q');
-			var mediaMp4 = mediaDir+'/'+videoM[quality];
-			var mediaWebM = mediaDir+'/'+videoW[quality];
-			myPlayer.jPlayer('setMedia', {m4v: mediaMp4});
+			var mediaMp4 = mediaDirM+'/'+videoM[quality];
+			var mediaWebM = mediaDirW+'/'+videoW[quality];
+			myPlayer.jPlayer('setMedia', {m4v: mediaMp4, webmv: mediaWebM});
 			myPlayer.jPlayer('play',timeOnClick);
 			$('.jp-quality-ctrl').fadeOut();
 			$('.quality-btn').hide();
@@ -587,8 +589,8 @@ $(document).ready(function(){
 			$('#main-loader').append('.');
 			var file = transcriptDir+'/'+id+'.htm'; 
 
-			var mediaMp4 = mediaDir+'/'+videoM['me'];
-			var mediaWebM = mediaDir+'/'+videoW['me'];
+			var mediaMp4 = mediaDirM+'/'+videoM['me'];
+			var mediaWebM = mediaDirW+'/'+videoW['me'];
 			
 			//console.log('file = '+audioogg);
 			 
@@ -636,6 +638,7 @@ $(document).ready(function(){
 					}
 					$(this).jPlayer("setMedia", {
 						m4v: mediaMp4,
+						webmv: mediaWebM,
 						poster: "poster.jpg"
 					});
 					setTimeout(function() {
@@ -644,7 +647,7 @@ $(document).ready(function(){
 				},
 				solution: "html, flash",
 				swfPath: "js",
-				supplied: "m4v",
+				supplied: "m4v,webmv",
 				preload: "auto",
 				size: {
 					width: "720px",
