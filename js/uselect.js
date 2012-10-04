@@ -1054,11 +1054,8 @@ $(document).ready(function(){
 
 			$('.mini-footer').slideUp(function() {
 				$('.footer').slideDown();
-				$('.body.row').animate({
-    			bottom: '120px'
-  			}, 500, function() {
-    		// Animation complete.
-  			});
+				$('.body.row').animate({bottom: '120px'}, 500);
+				$('#transcript-inst-panel').fadeOut();
 			});
 			
 			_gaq.push(['_trackEvent', 'USElect', 'Search ', 'Keyword(s) ='+searchStr]);
