@@ -935,7 +935,7 @@ $(document).ready(function(){
 				//data[h].m = hitsDetails[h];
 			}
 
-			drawBarChart(data);
+			// drawBarChart(data); // Moved down to animated callback. Opera bug on 1st chart.
 
       updatePieChart(demCount,repCount);
 
@@ -962,7 +962,9 @@ $(document).ready(function(){
 			$('#tweet-like').append('<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script><a data-url="" data-text="'+theTweet+'" href="http://twitter.com/share?url=x" class="twitter-share-button">Tweet</a>');  
 
 			$('.mini-footer').slideUp(function() {
-				$('.footer').slideDown();
+				$('.footer').slideDown(function() {
+					drawBarChart(data);
+				});
 				$('.body.row').animate({bottom: '120px'}, 500);
 				$('#transcript-inst-panel').fadeOut();
 			});
