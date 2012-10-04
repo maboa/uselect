@@ -222,18 +222,18 @@ $(document).ready(function(){
 
 		
 	var theScript = [];  
-	var mediaDir = "http://happyworm.com/clientarea/aj/video";
+	var mediaDir = "http://bc05.ajnm.me/665003303001";
 	var transcriptDir = "transcripts";  
 
 	var videoM = new Array();
 	var videoW = new Array();
-
+	
 	// mp4
 
-	videoM['lo'] = "debate08.mp4";
-	videoM['me'] = "debate08.mp4";
-	videoM['hi'] = "debate08.mp4";
-	videoM['hd'] = "debate08.mp4";
+	videoM['lo'] = "665003303001_1876552616001_US-PRES-DEBATE-1.mp4";
+	videoM['me'] = "665003303001_1876562017001_US-PRES-DEBATE-1.mp4";
+	videoM['hi'] = "665003303001_1876577900001_US-PRES-DEBATE-1.mp4";
+	videoM['hd'] = "665003303001_1876552928001_US-PRES-DEBATE-1.mp4";
 
 	// webm
 
