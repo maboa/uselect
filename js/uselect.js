@@ -812,7 +812,7 @@ $(document).ready(function(){
 		}
 
     function cleanWord(w) {
-    	return w.toLowerCase().replace(".","").replace(",","").replace("!","").replace("?","").replace("-","")
+    	return w.toLowerCase().replace(".","").replace(",","").replace("!","").replace("?","").replace("-","").replace("mitt romney: ","").replace("barack obama: ", "")
     }
 
     var hitsDetails;
