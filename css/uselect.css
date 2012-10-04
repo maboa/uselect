@@ -186,6 +186,14 @@ body { margin: 0; -webkit-text-size-adjust: 100%; }
 	width: 32px;
 	padding-right:4px;
 }
+.table-bar td.table-pen-td {
+	padding-right:0;
+}
+.table-bar td.table-last-td {
+	width: 40px;
+	padding-right:0;
+	font-weight:bold;
+}
 
 .panel-title {
 	background-color: #f9b72b;
