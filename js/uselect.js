@@ -1,9 +1,20 @@
+/*
+ * Dual licensed under the MIT and GPL licenses.
+ *  - http://www.opensource.org/licenses/mit-license.php
+ *  - http://www.gnu.org/copyleft/gpl.html
+ *
+ * Authors: Mark Boas, Mark J Panaghiston
+ *
+ * For: Al-Jazeera and OpenNews
+ *
+ * Date: 4th October 2012
+ */
+
 $(document).ready(function(){   
 
 	var locationUrl = (window.location != window.parent.location) ? document.referrer: document.location;
 	var hashTag = "#debates #election2012";
-	//getUrlVars();
-	//console.log(getUrlVars()["s"]);
+
 
 	$('#searchStr').focus();
 
@@ -213,8 +224,6 @@ $(document).ready(function(){
 
     barDemo.selectAll("rect").on("click", function(d,i) {
 
-  		// console.dir(d);
-  		// console.dir(i);
   	});
 
 		maxData = d3.max(data, function(datum) { return datum.s; });
@@ -267,6 +276,7 @@ $(document).ready(function(){
 
 	var i = 0;
 
+	// unused for now ...
 
 	if (theScriptState[i] != false) { 
 		 	while (theScriptState[i] != undefined) {
@@ -274,7 +284,6 @@ $(document).ready(function(){
                 
 				// repeated code use loadFile with a callback 
 				
-				//console.log('snippet --------------- > '+i);
 
 				var timespan = {};
 				timespan.s = parseInt(theScriptState[i].s);
@@ -286,17 +295,8 @@ $(document).ready(function(){
 				var mediaMp4 = mediaDirM+'/'+timespan.m+'.mp4';
 				var mediaWebM = mediaDirW+'/'+timespan.m+'.webm';
 				
-				//console.log('file = '+audioogg);       
-				//console.log(myPlayer.data('jPlayer').status.src);
-				//timespan.src = myPlayer.data('jPlayer').status.src; 
-				 
-				
 				theScript.push(timespan);  
-				
-				//console.log(theScriptState[i].s);   
 
-
-				
 				$.ajax({
 				  url: file,
 				  async: false,
@@ -342,20 +342,10 @@ $(document).ready(function(){
 				  }
 				});
 
-
-
-
-				//while (theScript
-
-				//$('#target-content').append();
-
-				i++;
-				//console.log('New snippet');      
-			 } 
+				i++;  
+			} 
 		   
 		}  
-		
-		//console.log('EXITED');
    
 
 		// These events are fired as play time increments  
@@ -368,16 +358,13 @@ $(document).ready(function(){
 		$('#transcript').delegate('span','click',function(e){ 
 			playSource = true; 
 			var jumpTo = $(this).attr('m')/1000; 
-            //console.log('playing from '+jumpTo);
 			myPlayer.jPlayer("play",jumpTo);  
 			$('#play-btn-source').hide();
 			$('#pause-btn-source').show();  
-			//console.log($(this).attr('m')/1000);
 
 			/*e.stopPropagation();
 			e.preventDefault(); 
     	e.stopImmediatePropagation();*/
-			//console.log('click');
 
     	_gaq.push(['_trackEvent', 'USElect', 'Word clicked', 'word '+$(this).text()]);
 		   
@@ -401,7 +388,6 @@ $(document).ready(function(){
 		/* load in the file */  
 
 		loadFile('debate08');
-		//$('#transcript-content').css('top','540px');
 
 		function initPopcorn(id) {   
 			var p = Popcorn(id)
@@ -422,8 +408,6 @@ $(document).ready(function(){
 					
 						var src = "";
 
-						//console.log("now="+now+" end="+end+" theScript.length="+theScript.length+" index="+index+"playSource="+playSource);
-					
 						if (now > end && playSource == false) {   
 
           		// myPlayer.jPlayer("pause"); // MJP: Looks like old code. Commented out.
@@ -511,7 +495,6 @@ $(document).ready(function(){
 					futureClass: "transcript-grey",
 					target: this,
 					onNewPara: function(parent) {
-						// console.log('para change');
 						$("#transcript-content").stop().scrollTo($(parent), 800, {axis:'y',margin:true,offset:{top:0}});
 					}
 				});  
@@ -531,7 +514,6 @@ $(document).ready(function(){
 						futureClass: "transcript-grey",
 						target: $trans[i],
 						onNewPara: function(parent) {
-							// console.log('para change');
 							$("#transcript-content").stop().scrollTo($(parent), 800, {axis:'y',margin:true,offset:{top:0}});
 						}
 					});
@@ -544,27 +526,19 @@ $(document).ready(function(){
 		}
 
 		$('rect,text').live('click',function(e){
-			// console.dir($(this));
 			var top = $('#chart').offset().top;
 			var height = $('#chart').height();
-			//console.log(maxData);
 			var piece = (maxData-1) - (Math.floor((e.clientY-top) / (height/maxData)));
-			//console.log("piece="+piece);
-			//console.dir($(this).index());
-			//console.log(hitsDetails[$(this).index()][piece]);
-			//console.log("index="+$(this).index());
+
 			// text items are placed next to rects affecting their indexes so we need to mod
-			//console.log("hd len"+hits.length);
+
 			var gIndex = $(this).index() % bars;
-			//console.log(gIndex);
 			var m = hitsDetails[gIndex][piece];
 			jumpTo = m/1000;
-			//console.log(jumpTo);
 			myPlayer.jPlayer("play",jumpTo);  
 
 			var $target = $('#transcript-content span[m="'+m+'"]').parent(); // The paragraph of the word.
-			//console.dir($target);
-			//console.log($target);
+
 			$target = $target.prev().length ? $target.prev() : $target; // Select the previous paragraph if there is one.
 			// Transcript has progressed beyond last paragraph, select last. Prevents crash in jquery
     	$target = $target.length ? $target : $("#transcript-content span").last().parent();
@@ -582,12 +556,8 @@ $(document).ready(function(){
 
 			var mediaMp4 = mediaDirM+'/'+videoM['me'];
 			var mediaWebM = mediaDirW+'/'+videoW['me'];
-			
-			//console.log('file = '+audioogg);
 			 
 			currentlyPlaying = id;
-
-			//$('.direct').html('loading ...');
 
 			var p, loadTrans = function() {
 				$('#load-status').html('loading ...');
@@ -607,7 +577,6 @@ $(document).ready(function(){
 					}
 					
 					$('#source-header-ctrl').fadeIn();
-					//console.log('loaded');
 					
 					countWords();
 
@@ -707,13 +676,7 @@ $(document).ready(function(){
 			if (tweetable.length > 78) {
 				tweetable = tweetable.substr(0,75)+'...';
 			}
-			
-	 		/*console.dir(select);    
-			console.log(startSpan.getAttribute('oval'));    
-			console.log(startSpan.getAttribute('m'));   
-			console.log(endSpan.getAttribute('oval'));    
-			console.log(endSpan.getAttribute('m'));   */
-			      
+						      
 			
 			// Short and sweet      
 			
@@ -828,7 +791,6 @@ $(document).ready(function(){
 					speakerWords['m'] = speakerWords['m'] + $(this).children().length;
 				}
 
-				
 				//console.log('length='+$(this).children().length);
 			});
 
@@ -846,14 +808,12 @@ $(document).ready(function(){
 
     var hitsDetails;
 
-
 		$('#search-btn').click(function(){   
 
 			hitsDetails = [];
 
 			var searchStr = $('#searchStr').val().toLowerCase();
 
-			// console.log(searchStr);
 			var matches = [];
 			var speakers = [];
 			var demCount = 0;
@@ -862,73 +822,41 @@ $(document).ready(function(){
 			$('#transcript-content span').css('background-color','white');
 
 			$('#transcript-content span').each(function(i) {
-				//console.log(i + ': ' + $(this).text() + ': '+ $(this).attr('m'));
+
 				var searchWords = searchStr.split(" ");
-				//console.dir(searchWords);
 				if (searchWords[0] == cleanWord($(this).text())) {
-					//console.log(searchWords[0]+"="+cleanWord($(this).text()));
 					var matching = true;
 					if (searchWords.length == 1) {
 						//$(this).css('background-color','yellow');
-						
 					} else {
 						var nextWord = $(this).next();
-						//console.dir("."+searchWords);
 
 						for (var w=1; w < searchWords.length; w++) {
-							//console.log("sw="+searchWords[w]);
-							//console.log("nw="+nextWord.text());
+
 							if (searchWords[w] != cleanWord(nextWord.text())) {
-								//console.log('matching is false');
 								matching = false;
 							}
 							nextWord = nextWord.next();
 						}
 					}
 					
-					//console.dir(".."+searchWords);
-					//console.log('check matching '+matching);
-
-					
 					if (matching == true) {
 
-						
-
-						//console.log('matching is true so colour code');
-
 						var thisWord = $(this);
-						
-						//if (searchWords.length > 1) {
-							//console.log('colour coding');
-							/*for (var w=0; w < searchWords.length; w++) {
-								thisWord.css('background-color','yellow');
-								thisWord = thisWord.next();
-							}	*/
-						//}
-
 						var timeSpan = {};
 						timeSpan.s = parseInt($(this).attr('m'));
 						timeSpan.e = parseInt($(this).attr('m'))+1000;
 						theScript.push(timeSpan); 
-						//console.log('match at '+$(this).attr('m')/60000);
 
 						/*establish the speaker*/
 
 						var wordElement = $(this).parent().children(':first');
 						var word = wordElement.text();
-						//console.log('SPEAKER '+word);
 
 						while (word.indexOf('BARACK OBAMA:') < 0 && word.indexOf('JOHN MCCAIN:') < 0 && word.indexOf('MODERATOR:') < 0) {
-							
-							//console.log("CHECKING ...... "+word);
-
 							wordElement = wordElement.parent().prev().children(':first');
 							word = wordElement.text();
-							
 						}
-
-						//console.log("---> word is "+word);
-
 						
 						if (word.indexOf('BARACK OBAMA:') >= 0) {
 							speakers.push('d');
@@ -964,26 +892,13 @@ $(document).ready(function(){
 				
 				/*playSource = false;
 				end = -1;
-				index = 0;*/
-
-				
-				
+				index = 0;*/		
 			});
-
-			//console.dir(matches);
-			
-			//console.log('--speakers--');
-			//console.dir(speakers);
-			//console.log('the Script ...');
-			//console.dir(theScript);
-			//console.log('--matches--');
-			//console.dir(matches);
 
 			var hits = new Array(bars);
 			for (var h=0; h < hits.length; h++) {
 				hits[h] = 0;
 			}
-
 
 			for (var n=0; n < matches.length; n++) {	
 				if (speakers[n] == 'r') {
@@ -1006,21 +921,13 @@ $(document).ready(function(){
 				
 			}
 
-			//console.dir(hits);
-			//console.dir(hitsDetails);
-
 			for (var h=0; h < hits.length; h++) {
 				data[h] = {};
 				data[h].s = hits[h];
 				//data[h].m = hitsDetails[h];
 			}
 
-			//console.dir(data);
-
 			drawBarChart(data);
-
-      //console.log(demCount);
-      //console.log(repCount);
 
       updatePieChart(demCount,repCount);
 
@@ -1031,8 +938,6 @@ $(document).ready(function(){
 
 			// set up tweet
 
-  
-			
 			var winLoc = locationUrl;      
 			var url = winLoc;
 			var paramStart = winLoc.indexOf('?');   
@@ -1070,17 +975,13 @@ $(document).ready(function(){
 		function checkKeywordParam() {
 			if (getUrlVars()["k"] != null) {    
 				var s = getUrlVars()["k"];
-				// console.log(s);
     		$('#searchStr').val(s);
     		$('#search-btn').trigger('click');
 				_gaq.push(['_trackEvent', 'USElect', 'Keyword parameter', 'Triggered at '+s]);
 			}
 		}
 
-
-
 		function getUrlVars() {
-			//console.log('checking url ....');
 			var vars = [], hash;
 			var myWindow = window;
 
@@ -1091,7 +992,6 @@ $(document).ready(function(){
 			var hashes = locationUrl.slice(locationUrl.indexOf('?') + 1).split('&');
 			for(var i = 0; i < hashes.length; i++)
 			{
-				//console.dir(hashes[i]);
 				hash = hashes[i].split('=');
 				vars.push(hash[0]);
 				vars[hash[0]] = hash[1];
