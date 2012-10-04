@@ -646,7 +646,7 @@ $(document).ready(function(){
 						loadTrans();
 					}, 1000);
 				},
-				solution: html, flash",
+				solution: "html, flash",
 				swfPath: "js",
 				supplied: "m4v,webmv",
 				preload: "auto",
