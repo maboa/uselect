@@ -653,7 +653,7 @@ $(document).ready(function(){
 						loadTrans();
 					}, 1000);
 				},
-				seek: function() {
+				seeking: function() {
 					$('.jp-video-busy').show();
 				},
 				seeked: function() {
