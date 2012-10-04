@@ -222,6 +222,10 @@ body { margin: 0; -webkit-text-size-adjust: 100%; }
 	padding-top: 4px;
 }
 
+#chart {
+	padding-left:16px;height:70px;width:720px;
+}
+
 #chart svg {
   font: 10px sans-serif;
 }
@@ -257,6 +261,15 @@ body { margin: 0; -webkit-text-size-adjust: 100%; }
 	padding: 4px;
 }
 
+.search-str {
+	width:160px; 
+	height:20px; 
+	border:2px solid #666; 
+	-webkit-box-shadow: 0 0 10px rgb(249, 183, 43); 
+	-moz-box-shadow: 0 0 10px rgb(249, 183, 43); 
+	font-size:16px;
+}
+
 #transcript-inst {
 	text-align: left;
 	padding: 0 8px 0 8px;
@@ -265,5 +278,5 @@ body { margin: 0; -webkit-text-size-adjust: 100%; }
 .logos {
 	position: absolute;
 	top: 2px;
-	left: 850px;
+	left: 844px;
 }

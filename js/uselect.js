@@ -246,26 +246,10 @@ $(document).ready(function(){
 	videoW['hd'] = "debate.webm";
 
 	var latency = 1000;
-        //console.log('start');                    
-		// Grab the script from the URL
+
 	var theScriptState = [];
-	//var theScriptState = $.bbq.getState();  
-		//console.dir(theScript);  
+
 	var theScriptLength = theScript.length; 
-		
-		//console.log(theScript[0].m);         
-	    //console.log(theScriptLength); 
-		//console.log(theScript.length);   
-		
-		/*if (theScriptLength > 0) {   
-			
-			for (var i=0; i < theScriptLength; i++) {
-				loadFile(theScript[i].m);
-			}
-			
-		} else {
-		  theScript = [];   
-		} */
 		
 		
 	var currentyLoaded = "";
