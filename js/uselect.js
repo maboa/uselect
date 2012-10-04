@@ -321,8 +321,7 @@ $(document).ready(function(){
 						// load in the audio      
 
 				  	myPlayer.jPlayer("setMedia", {
-		        	m4v: mediaMp4,
-		        	webmv: mediaWebM
+		        	m4v: mediaMp4
 		      	});
 
 						$.data(myPlayer,'mediaId',timespan.m);
@@ -482,7 +481,7 @@ $(document).ready(function(){
 			var quality = $(this).attr('q');
 			var mediaMp4 = mediaDir+'/'+videoM[quality];
 			var mediaWebM = mediaDir+'/'+videoW[quality];
-			myPlayer.jPlayer('setMedia', {m4v: mediaMp4, webmv: mediaWebM});
+			myPlayer.jPlayer('setMedia', {m4v: mediaMp4});
 			myPlayer.jPlayer('play',timeOnClick);
 			$('.jp-quality-ctrl').fadeOut();
 			$('.quality-btn').hide();
@@ -635,7 +634,6 @@ $(document).ready(function(){
 					}
 					$(this).jPlayer("setMedia", {
 						m4v: mediaMp4,
-						webmv: mediaWebM,
 						poster: "poster.png"
 					});
 					setTimeout(function() {
@@ -644,7 +642,7 @@ $(document).ready(function(){
 				},
 				solution: "html, flash",
 				swfPath: "js",
-				supplied: "m4v,webmv",
+				supplied: "m4v",
 				preload: "auto",
 				size: {
 					width: "720px",
