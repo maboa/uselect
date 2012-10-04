@@ -192,6 +192,7 @@ body { margin: 0; -webkit-text-size-adjust: 100%; }
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 15px;	
 	font-weight: bold;
+	padding: 4px 0 4px 0;
 }
 
 .share-snippet {
@@ -241,4 +242,8 @@ body { margin: 0; -webkit-text-size-adjust: 100%; }
 	font-size: 20px;
 	padding-top: 80px;
 	text-align: center;
+}
+
+#search-btn {
+	padding: 4px;
 }
