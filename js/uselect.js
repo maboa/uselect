@@ -485,8 +485,15 @@ $(document).ready(function(){
 			var quality = $(this).attr('q');
 			var mediaMp4 = mediaDirM+'/'+videoM[quality];
 			var mediaWebM = mediaDirW+'/'+videoW[quality];
+			// IE9 needs a fix to support SetMedia followed by play(time). It works for all browsers.
+			myPlayer.bind($.jPlayer.event.progress + ".ie9fix", (function(time) {
+				return function() {
+					$(this).unbind(".ie9fix");
+					$(this).jPlayer("play",time);
+				};
+			})(timeOnClick));
 			myPlayer.jPlayer('setMedia', {m4v: mediaMp4, webmv: mediaWebM});
-			myPlayer.jPlayer('play',timeOnClick);
+			// myPlayer.jPlayer('play',timeOnClick);
 			$('.jp-quality-ctrl').fadeOut();
 			$('.quality-btn').hide();
 			$('.quality-btn[q="'+quality+'"]').show();
