@@ -1,7 +1,7 @@
 $(document).ready(function(){   
 
 	var locationUrl = (window.location != window.parent.location) ? document.referrer: document.location;
-	var hashTag = "#USElect12";
+	var hashTag = "#debates #election2012";
 	//getUrlVars();
 	//console.log(getUrlVars()["s"]);
 
@@ -697,8 +697,8 @@ $(document).ready(function(){
 			
 			// We can do this better by looking at the complete tweet once generated and then removing from inside the quote until it fits 140 chars 
 			
-			if (tweetable.length > 88) {
-				tweetable = tweetable.substr(0,85)+'...';
+			if (tweetable.length > 78) {
+				tweetable = tweetable.substr(0,75)+'...';
 			}
 			
 	 		/*console.dir(select);    
@@ -1021,6 +1021,27 @@ $(document).ready(function(){
 			$('#demWords').text(demCount+" mentions");
 
 			$('#pieTitle').text($('#searchStr').val());
+
+			// set up tweet
+
+  
+			
+			var winLoc = locationUrl;      
+			var url = winLoc;
+			var paramStart = winLoc.indexOf('?');   
+			
+			if (paramStart > 0) {
+				url = winLoc.substr(0,paramStart);
+			}
+			 
+			var theTweet = "How many times did they mention '"+searchStr+"'? "+url+"?k="+searchStr+" "+hashTag;//+"&e="+e;  
+				 
+			$('.share-snippet').empty();
+			$('.share-snippet').append(theTweet);  
+			$('#tweet-like').empty();
+			$('#tweet-like').append('<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script><a data-url="" data-text="'+theTweet+'" href="http://twitter.com/share?url=x" class="twitter-share-button">Tweet</a>');  
+
+
 
 			_gaq.push(['_trackEvent', 'USElect', 'Search ', 'Keyword(s) ='+searchStr]);
 
