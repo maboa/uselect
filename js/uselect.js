@@ -15,6 +15,7 @@ $(document).ready(function(){
 	var locationUrl = (window.location != window.parent.location) ? document.referrer: document.location;
 	var hashTag = "#debates #election2012";
 
+	var operaBarChartFix = true;
 
 	$('#searchStr').focus();
 
@@ -964,7 +965,10 @@ $(document).ready(function(){
 
 			$('.mini-footer').slideUp(function() {
 				$('.footer').slideDown(function() {
-					drawBarChart(data); // Draw the graph again to keep Opera happy that 1st time.
+					if(operaBarChartFix) {
+						operaBarChartFix = false;
+						drawBarChart(data); // Draw the graph again to keep Opera happy that 1st time.
+					}
 				});
 				$('.body.row').animate({bottom: '120px'}, 500);
 				$('#transcript-inst-panel').fadeOut();
