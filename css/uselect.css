@@ -261,3 +261,9 @@ body { margin: 0; -webkit-text-size-adjust: 100%; }
 	text-align: left;
 	padding: 0 8px 0 8px;
 }
+
+.logos {
+	position: absolute;
+	top: 2px;
+	left: 850px;
+}
