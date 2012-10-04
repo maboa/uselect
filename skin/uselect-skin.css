@@ -260,7 +260,7 @@ div.jp-video-360p div.jp-video-play, div.jp-video-360p div.jp-video-busy, div.jp
     height:383px;
 }
 div.jp-video-full div.jp-video-play, div.jp-video-full div.jp-video-busy, div.jp-video-full div.jp-quality-ctrl{
-    height:100%;
+    height:383px; /* 100% */
     z-index:1000;
 }
 
@@ -275,7 +275,7 @@ div.jp-video-full div.jp-video-play, div.jp-video-full div.jp-video-busy, div.jp
     margin-left : -25px;
     margin-top : -25px;
     left:50%;
-    top:-220px;
+    top:50%; /* -220px; */
     z-index:9999999;
 }
 

@@ -653,6 +653,18 @@ $(document).ready(function(){
 						loadTrans();
 					}, 1000);
 				},
+				seek: function() {
+					$('.jp-video-busy').show();
+				},
+				seeked: function() {
+					$('.jp-video-busy').hide();
+				},
+				waiting: function() {
+					$('.jp-video-busy').show();
+				},
+				playing: function() {
+					$('.jp-video-busy').hide();
+				},
 				solution: "html, flash",
 				swfPath: "js",
 				supplied: "m4v,webmv",
