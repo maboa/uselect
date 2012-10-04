@@ -1041,7 +1041,7 @@ $(document).ready(function(){
 			$('#tweet-like').empty();
 			$('#tweet-like').append('<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script><a data-url="" data-text="'+theTweet+'" href="http://twitter.com/share?url=x" class="twitter-share-button">Tweet</a>');  
 
-
+			$('.footer').slideDown();
 
 			_gaq.push(['_trackEvent', 'USElect', 'Search ', 'Keyword(s) ='+searchStr]);
 
