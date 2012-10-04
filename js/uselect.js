@@ -633,16 +633,18 @@ $(document).ready(function(){
 					} else {
 						$(this).jPlayer('option', 'emulateHtml', true);
 						p = initPopcorn('#' + myPlayer.attr('id'));
+						$(this).trigger($.jPlayer.event.loadeddata);
 					}
 					$(this).jPlayer("setMedia", {
 						m4v: mediaMp4,
+						webmv: mediaWebM,
 						poster: "poster.jpg"
 					});
 					setTimeout(function() {
 						loadTrans();
 					}, 1000);
 				},
-				solution: "html, flash",
+				solution: html, flash",
 				swfPath: "js",
 				supplied: "m4v",
 				preload: "auto",
