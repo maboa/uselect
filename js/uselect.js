@@ -935,7 +935,8 @@ $(document).ready(function(){
 				//data[h].m = hitsDetails[h];
 			}
 
-			// drawBarChart(data); // Moved down to animated callback. Opera bug on 1st chart.
+			// The chart gets drawn twice now to fix Opera bug and to make it slide in nicely for other browsers.
+			drawBarChart(data); // Moved down to animated callback. Opera bug on 1st chart.
 
       updatePieChart(demCount,repCount);
 
@@ -963,7 +964,7 @@ $(document).ready(function(){
 
 			$('.mini-footer').slideUp(function() {
 				$('.footer').slideDown(function() {
-					drawBarChart(data);
+					drawBarChart(data); // Draw the graph again to keep Opera happy that 1st time.
 				});
 				$('.body.row').animate({bottom: '120px'}, 500);
 				$('#transcript-inst-panel').fadeOut();
