@@ -5,6 +5,8 @@ $(document).ready(function(){
 	//getUrlVars();
 	//console.log(getUrlVars()["s"]);
 
+	$('#searchStr').focus();
+
 	$('#main-loader').append('.');
 	var bars = 40;
 	var data = new Array(bars);
@@ -634,7 +636,7 @@ $(document).ready(function(){
 					}
 					$(this).jPlayer("setMedia", {
 						m4v: mediaMp4,
-						poster: "poster.png"
+						poster: "poster.jpg"
 					});
 					setTimeout(function() {
 						loadTrans();
