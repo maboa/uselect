@@ -140,7 +140,7 @@ body { margin: 0; -webkit-text-size-adjust: 100%; }
 .middle.col { width: 752px; }
 .right.col { left: 756px; width: 239px; font-size: 15px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;line-height:20px;}
 .header.row { top: 48px; height: 30px; }
-.body.row { top: 50px; bottom: 120px; }
+.body.row { top: 50px; bottom: 40px; }
 .footer.row { height: 120px; bottom: 0px;}
 .mini-footer { height: 40px; bottom: 0px;}
 

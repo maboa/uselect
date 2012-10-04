@@ -1047,6 +1047,11 @@ $(document).ready(function(){
 
 			$('.mini-footer').slideUp(function() {
 				$('.footer').slideDown();
+				$('.body.row').animate({
+    			bottom: '120px'
+  			}, 500, function() {
+    		// Animation complete.
+  			});
 			});
 			
 			_gaq.push(['_trackEvent', 'USElect', 'Search ', 'Keyword(s) ='+searchStr]);
