@@ -559,7 +559,7 @@ $(document).ready(function(){
 			 
 			currentlyPlaying = id;
 
-			var p, loadTrans = function() {
+			var p, busyId, delayBusy = 250, loadTrans = function() {
 				$('#load-status').html('loading ...');
 				$('#transcript-content').load(file, function() {
 				  	//load success!!!     
@@ -607,15 +607,23 @@ $(document).ready(function(){
 					}, 1000);
 				},
 				seeking: function() {
-					$('.jp-video-busy').show();
+					clearTimeout(busyId);
+					busyId = setTimeout(function() {
+						$('.jp-video-busy').show();
+					},delayBusy);
 				},
 				seeked: function() {
+					clearTimeout(busyId);
 					$('.jp-video-busy').hide();
 				},
 				waiting: function() {
-					$('.jp-video-busy').show();
+					clearTimeout(busyId);
+					busyId = setTimeout(function() {
+						$('.jp-video-busy').show();
+					},delayBusy);
 				},
 				playing: function() {
+					clearTimeout(busyId);
 					$('.jp-video-busy').hide();
 				},
 				solution: "html, flash",
