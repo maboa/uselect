@@ -792,7 +792,7 @@ $(document).ready(function(){
 					speakerWords['d'] = speakerWords['d'] + $(this).children().length;
 				}
 
-				if ($(this).children(':first').text().indexOf('MIT ROMNEY:') >= 0) {
+				if ($(this).children(':first').text().indexOf('MITT ROMNEY:') >= 0) {
 					speakerWords['r'] = speakerWords['r'] + $(this).children().length;
 				}
 
@@ -831,9 +831,10 @@ $(document).ready(function(){
 			$('#transcript-content span').css('background-color','white');
 
 			$('#transcript-content span').each(function(i) {
-
+				//console.log($(this).text());
 				var searchWords = searchStr.split(" ");
 				if (searchWords[0] == cleanWord($(this).text())) {
+					
 					var matching = true;
 					if (searchWords.length == 1) {
 						//$(this).css('background-color','yellow');
@@ -854,15 +855,15 @@ $(document).ready(function(){
 						var thisWord = $(this);
 						var timeSpan = {};
 						timeSpan.s = parseInt($(this).attr('m'));
-						timeSpan.e = parseInt($(this).attr('m'))+1000;
-						theScript.push(timeSpan); 
+						//timeSpan.e = parseInt($(this).attr('m'))+1000;
+						//theScript.push(timeSpan); 
 
 						/*establish the speaker*/
 
 						var wordElement = $(this).parent().children(':first');
 						var word = wordElement.text();
 
-						while (word.indexOf('BARACK OBAMA:') < 0 && word.indexOf('MITT ROMNEY:') < 0 && word.indexOf('MODERATOR:') < 0) {
+						while (word.indexOf('BARACK OBAMA:') < 0 && word.indexOf('MITT ROMNEY:') < 0 && word.indexOf('JIM LEHRER:') < 0) {
 							wordElement = wordElement.parent().prev().children(':first');
 							word = wordElement.text();
 						}
@@ -891,7 +892,7 @@ $(document).ready(function(){
 							}
 						}
 
-						if (word.indexOf('SPEAKER:') >= 0) {
+						if (word.indexOf('JIM LEHRER:') >= 0) {
 							speakers.push('s');
 						}
 					}
