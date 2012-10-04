@@ -892,9 +892,9 @@ $(document).ready(function(){
 							}
 						}
 
-						if (word.indexOf('JIM LEHRER:') >= 0) {
+						/*if (word.indexOf('JIM LEHRER:') >= 0) {
 							speakers.push('s');
-						}
+						}*/
 					}
 				}
 
