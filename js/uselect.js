@@ -213,8 +213,8 @@ $(document).ready(function(){
 
     barDemo.selectAll("rect").on("click", function(d,i) {
 
-  		console.dir(d);
-  		console.dir(i);
+  		// console.dir(d);
+  		// console.dir(i);
   	});
 
 		maxData = d3.max(data, function(datum) { return datum.s; });
@@ -388,7 +388,7 @@ $(document).ready(function(){
 			myPlayer.jPlayer("play",jumpTo);  
 			$('#play-btn-source').hide();
 			$('#pause-btn-source').show();  
-			console.log($(this).attr('m')/1000);
+			//console.log($(this).attr('m')/1000);
 
 			/*e.stopPropagation();
 			e.preventDefault(); 
@@ -520,7 +520,7 @@ $(document).ready(function(){
 					futureClass: "transcript-grey",
 					target: this,
 					onNewPara: function(parent) {
-						console.log('para change');
+						// console.log('para change');
 						$("#transcript-content").stop().scrollTo($(parent), 800, {axis:'y',margin:true,offset:{top:0}});
 					}
 				});  
@@ -540,7 +540,7 @@ $(document).ready(function(){
 						futureClass: "transcript-grey",
 						target: $trans[i],
 						onNewPara: function(parent) {
-							console.log('para change');
+							// console.log('para change');
 							$("#transcript-content").stop().scrollTo($(parent), 800, {axis:'y',margin:true,offset:{top:0}});
 						}
 					});
@@ -553,7 +553,7 @@ $(document).ready(function(){
 		}
 
 		$('rect,text').live('click',function(e){
-			console.dir($(this));
+			// console.dir($(this));
 			var top = $('#chart').offset().top;
 			var height = $('#chart').height();
 			//console.log(maxData);
@@ -561,19 +561,19 @@ $(document).ready(function(){
 			//console.log("piece="+piece);
 			//console.dir($(this).index());
 			//console.log(hitsDetails[$(this).index()][piece]);
-			console.log("index="+$(this).index());
+			//console.log("index="+$(this).index());
 			// text items are placed next to rects affecting their indexes so we need to mod
 			//console.log("hd len"+hits.length);
 			var gIndex = $(this).index() % bars;
-			console.log(gIndex);
+			//console.log(gIndex);
 			var m = hitsDetails[gIndex][piece];
 			jumpTo = m/1000;
-			console.log(jumpTo);
+			//console.log(jumpTo);
 			myPlayer.jPlayer("play",jumpTo);  
 
 			var $target = $('#transcript-content span[m="'+m+'"]').parent(); // The paragraph of the word.
-			console.dir($target);
-			console.log($target);
+			//console.dir($target);
+			//console.log($target);
 			$target = $target.prev().length ? $target.prev() : $target; // Select the previous paragraph if there is one.
 			// Transcript has progressed beyond last paragraph, select last. Prevents crash in jquery
     	$target = $target.length ? $target : $("#transcript-content span").last().parent();
@@ -850,7 +850,7 @@ $(document).ready(function(){
 
 			var searchStr = $('#searchStr').val().toLowerCase();
 
-			console.log(searchStr);
+			// console.log(searchStr);
 			var matches = [];
 			var speakers = [];
 			var demCount = 0;
@@ -863,7 +863,7 @@ $(document).ready(function(){
 				var searchWords = searchStr.split(" ");
 				//console.dir(searchWords);
 				if (searchWords[0] == cleanWord($(this).text())) {
-					console.log(searchWords[0]+"="+cleanWord($(this).text()));
+					//console.log(searchWords[0]+"="+cleanWord($(this).text()));
 					var matching = true;
 					if (searchWords.length == 1) {
 						//$(this).css('background-color','yellow');
@@ -873,10 +873,10 @@ $(document).ready(function(){
 						//console.dir("."+searchWords);
 
 						for (var w=1; w < searchWords.length; w++) {
-							console.log("sw="+searchWords[w]);
-							console.log("nw="+nextWord.text());
+							//console.log("sw="+searchWords[w]);
+							//console.log("nw="+nextWord.text());
 							if (searchWords[w] != cleanWord(nextWord.text())) {
-								console.log('matching is false');
+								//console.log('matching is false');
 								matching = false;
 							}
 							nextWord = nextWord.next();
@@ -913,18 +913,18 @@ $(document).ready(function(){
 
 						var wordElement = $(this).parent().children(':first');
 						var word = wordElement.text();
-						console.log('SPEAKER '+word);
+						//console.log('SPEAKER '+word);
 
 						while (word.indexOf('BARACK OBAMA:') < 0 && word.indexOf('JOHN MCCAIN:') < 0 && word.indexOf('MODERATOR:') < 0) {
 							
-							console.log("CHECKING ...... "+word);
+							//console.log("CHECKING ...... "+word);
 
 							wordElement = wordElement.parent().prev().children(':first');
 							word = wordElement.text();
 							
 						}
 
-						console.log("---> word is "+word);
+						//console.log("---> word is "+word);
 
 						
 						if (word.indexOf('BARACK OBAMA:') >= 0) {
@@ -969,12 +969,12 @@ $(document).ready(function(){
 
 			//console.dir(matches);
 			
-			console.log('--speakers--');
-			console.dir(speakers);
+			//console.log('--speakers--');
+			//console.dir(speakers);
 			//console.log('the Script ...');
 			//console.dir(theScript);
-			console.log('--matches--');
-			console.dir(matches);
+			//console.log('--matches--');
+			//console.dir(matches);
 
 			var hits = new Array(bars);
 			for (var h=0; h < hits.length; h++) {
@@ -1003,8 +1003,8 @@ $(document).ready(function(){
 				
 			}
 
-			console.dir(hits);
-			console.dir(hitsDetails);
+			//console.dir(hits);
+			//console.dir(hitsDetails);
 
 			for (var h=0; h < hits.length; h++) {
 				data[h] = {};
@@ -1012,12 +1012,12 @@ $(document).ready(function(){
 				//data[h].m = hitsDetails[h];
 			}
 
-			console.dir(data);
+			//console.dir(data);
 
 			drawBarChart(data);
 
-      console.log(demCount);
-      console.log(repCount);
+      //console.log(demCount);
+      //console.log(repCount);
 
       updatePieChart(demCount,repCount);
 
@@ -1063,7 +1063,7 @@ $(document).ready(function(){
 		function checkKeywordParam() {
 			if (getUrlVars()["k"] != null) {    
 				var s = getUrlVars()["k"];
-				console.log(s);
+				// console.log(s);
     		$('#searchStr').val(s);
     		$('#search-btn').trigger('click');
 				_gaq.push(['_trackEvent', 'USElect', 'Keyword parameter', 'Triggered at '+s]);
@@ -1073,7 +1073,7 @@ $(document).ready(function(){
 
 
 		function getUrlVars() {
-			console.log('checking url ....');
+			//console.log('checking url ....');
 			var vars = [], hash;
 			var myWindow = window;
 
