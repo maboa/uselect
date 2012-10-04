@@ -107,7 +107,7 @@ body { margin: 0; -webkit-text-size-adjust: 100%; }
 .iemobile .page { bottom: -6px; }
 @media screen and (orientation:landscape) { .iemobile .page { bottom: 75px; } }
 
-.header, .footer {
+.header, .footer, .mini-footer {
     color: #444; background: #eee;
 }
 .header { font-size: 16px; }
@@ -142,6 +142,7 @@ body { margin: 0; -webkit-text-size-adjust: 100%; }
 .header.row { top: 48px; height: 30px; }
 .body.row { top: 50px; bottom: 120px; }
 .footer.row { height: 120px; bottom: 0px;}
+.mini-footer { height: 40px; bottom: 0px;}
 
 #corner-text {
 	padding: 0 16px;
