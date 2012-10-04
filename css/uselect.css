@@ -192,6 +192,7 @@ body { margin: 0; -webkit-text-size-adjust: 100%; }
 .table-bar td.table-last-td {
 	width: 40px;
 	padding-right:0;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-weight:bold;
 }
 
@@ -248,10 +249,15 @@ body { margin: 0; -webkit-text-size-adjust: 100%; }
 #main-loader {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 20px;
-	padding-top: 80px;
+	padding-top: 120px;
 	text-align: center;
 }
 
 #search-btn {
 	padding: 4px;
+}
+
+#transcript-inst {
+	text-align: left;
+	padding: 0 8px 0 8px;
 }
