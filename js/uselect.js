@@ -792,7 +792,7 @@ $(document).ready(function(){
 					speakerWords['d'] = speakerWords['d'] + $(this).children().length;
 				}
 
-				if ($(this).children(':first').text().indexOf('JOHN MCCAIN:') >= 0) {
+				if ($(this).children(':first').text().indexOf('MIT ROMNEY:') >= 0) {
 					speakerWords['r'] = speakerWords['r'] + $(this).children().length;
 				}
 
@@ -862,7 +862,7 @@ $(document).ready(function(){
 						var wordElement = $(this).parent().children(':first');
 						var word = wordElement.text();
 
-						while (word.indexOf('BARACK OBAMA:') < 0 && word.indexOf('JOHN MCCAIN:') < 0 && word.indexOf('MODERATOR:') < 0) {
+						while (word.indexOf('BARACK OBAMA:') < 0 && word.indexOf('MITT ROMNEY:') < 0 && word.indexOf('MODERATOR:') < 0) {
 							wordElement = wordElement.parent().prev().children(':first');
 							word = wordElement.text();
 						}
@@ -879,7 +879,7 @@ $(document).ready(function(){
 							}
 						}
 
-						if (word.indexOf('JOHN MCCAIN:') >= 0) {
+						if (word.indexOf('MITT ROMNEY:') >= 0) {
 							speakers.push('r');
 							matches.push($(this).attr('m'));
 							repCount++;
@@ -956,7 +956,7 @@ $(document).ready(function(){
 				url = winLoc.substr(0,paramStart);
 			}
 			 
-			var theTweet = "How many times did they mention '"+searchStr+"'? "+url+"?k="+searchStr+" "+hashTag;//+"&e="+e;  
+			var theTweet = "How many times did they mention '"+searchStr+"'? "+url+"?k="+searchStr.replace(' ','%20')+" "+hashTag;//+"&e="+e;  
 				 
 			$('.share-snippet').empty();
 			$('.share-snippet').append(theTweet);  
@@ -990,6 +990,7 @@ $(document).ready(function(){
 		function checkKeywordParam() {
 			if (getUrlVars()["k"] != null) {    
 				var s = getUrlVars()["k"];
+				s = s.replace('%20',' ');
     		$('#searchStr').val(s);
     		$('#search-btn').trigger('click');
 				_gaq.push(['_trackEvent', 'USElect', 'Keyword parameter', 'Triggered at '+s]);
