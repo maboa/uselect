@@ -587,6 +587,15 @@ $(document).ready(function(){
 			
 				});
 				console.log("loadTrans out "+(new Date()-startTimer));
+
+				// ugly chrome fix to stop scroll-bar disappearing
+
+				var bodyRow = $('.body.row');
+				var bottom = parseInt(bodyRow.css('bottom').replace('px',''));
+				bodyRow.animate({bottom: bottom+1+'px'}, 100);
+				bodyRow.animate({bottom: bottom+'px'}, 100);
+
+				// end ugly chrome fix
 			};
 
 			myPlayer.jPlayer({
@@ -720,7 +729,7 @@ $(document).ready(function(){
 				$('.share-snippet').empty();
 				$('.share-snippet').append(theTweet);  
 				$('#tweet-like').empty();
-				$('#tweet-like').append('<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script><a data-url="" data-text="'+theTweet+'" href="http://twitter.com/share?url=x" class="twitter-share-button">Tweet</a>');  
+				$('#tweet-like').append('<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script><a data-url="" data-text="'+theTweet+'" href="http://twitter.com/share?url=none&count=none" class="twitter-share-button">Tweet</a>');  
 
 				_gaq.push(['_trackEvent', 'USElect', 'Tweet generated', 'Tweet content '+theTweet]);
 			} 
@@ -973,7 +982,7 @@ $(document).ready(function(){
 						drawBarChart(data); // Draw the graph again to keep Opera happy that 1st time.
 					}
 				});
-				$('.body.row').animate({bottom: '120px'}, 500);
+				$('.body.row').animate({bottom: '164px'}, 500);
 				$('#transcript-inst-panel').fadeOut();
 			});
 			
