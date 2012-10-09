@@ -490,7 +490,9 @@ $(document).ready(function(){
 		});		
 
 		function initTranscript(p) {
+			console.log("initTranscript in "+(new Date()-startTimer));
 			$("#transcript-content span").each(function(i) {  
+				// doing p.transcript on every word is a bit inefficient - wondering if there is a better way
 				p.transcript({
 					time: $(this).attr("m") / 1000, // seconds
 					futureClass: "transcript-grey",
@@ -500,6 +502,7 @@ $(document).ready(function(){
 					}
 				});  
 			});
+			console.log("initTranscript out "+(new Date()-startTimer));
 		}
 
 		// Reviewed recursively async adding the plugins to avoid lock up at start.
@@ -551,6 +554,8 @@ $(document).ready(function(){
 			return false;
 		});
 		
+		var startTimer = new Date();
+
 		function loadFile(id) { 
 			$('#main-loader').append('.');
 			var file = transcriptDir+'/'+id+'.htm'; 
@@ -561,23 +566,17 @@ $(document).ready(function(){
 			currentlyPlaying = id;
 
 			var p, busySeekId, busyWaitId, delayBusy = 250, loadTrans = function() {
+				console.log("loadTrans in "+(new Date()-startTimer));
 				$('#load-status').html('loading ...');
-				$('#transcript-content').load(file, function() {
-				  	//load success!!!     
 
+				$('#transcript-content').load(file, function() {
+					console.log("loaded Transcript "+(new Date()-startTimer));
+				  	//load success!!!     
 					initTranscript(p);
 
 					$('#main-loader').append('.');
 
 					$.data(myPlayer,'mediaId',id);
-					$('#load-status').html('');
-
-					if (hints == true) {
-						$('#transcript-content-hint').fadeIn('slow');
-						$('#transcript-file-hint').fadeOut('slow');
-					}
-					
-					$('#source-header-ctrl').fadeIn();
 					
 					countWords();
 
@@ -587,6 +586,7 @@ $(document).ready(function(){
 					//$('#transcript').animate({scrollTop: $("#page").offset().top}, 2000);
 			
 				});
+				console.log("loadTrans out "+(new Date()-startTimer));
 			};
 
 			myPlayer.jPlayer({
@@ -780,6 +780,7 @@ $(document).ready(function(){
 		var speakerWords = [];
 
 		function countWords() {
+			console.log("countWords in "+(new Date()-startTimer));
 			var wordData = [];
 			var speaker = "";
 			var numWords = 0;
@@ -809,6 +810,7 @@ $(document).ready(function(){
 
 			$('#repWords').text(speakerWords['r']+" words");
 			$('#demWords').text(speakerWords['d']+" words");
+			console.log("countWords out "+(new Date()-startTimer));
 		}
 
     function cleanWord(w) {

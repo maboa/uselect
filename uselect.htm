@@ -214,19 +214,24 @@
 
 
 <!--[if lt IE 9]>
-  <script src="js/sizzle.js"></script>
-  <script src="js/es5-shim.min.js"></script>
+  <script type="text/javascript" src="js/sizzle.js"></script>
+  <script type="text/javascript" src="js/es5-shim.min.js"></script>
+  <script type="text/javascript" src="js/popcorn.ie8.js"></script> 
 <![endif]-->
 
+		<!-- combine these -->
 		<script type="text/javascript" src="js/jquery.min.js"></script>
 		<script type="text/javascript" src="js/jquery.jplayer.min.js"></script>      
 		<script type="text/javascript" src="js/jquery.scrollto.min.js"></script>
+
 		<script type="text/javascript" src="js/d3.v2.min.js"></script>  
-		<script type="text/javascript" src="js/popcorn.ie8.js"></script> 
+		
+		<!-- use same version of jQuery as holding page does - that way it should be cached -->
+		<!-- minify these -->
 		<script type="text/javascript" src="js/popcorn.js"></script> 
 		<script type="text/javascript" src="js/popcorn.transcript.js"></script> 
-		<script type="text/javascript" src="js/jquery.bbq.js"></script>   
-		<script type="text/javascript" src="js/iemobile-fix.js"></script>
+		<!--<script type="text/javascript" src="js/jquery.bbq.js"></script>-->  
+		<!--<script type="text/javascript" src="js/iemobile-fix.js"></script>-->
 		<script type="text/javascript" src="js/uselect.js"></script>
 
 		<!-- GA @start code -->
