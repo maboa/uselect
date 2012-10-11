@@ -74,8 +74,8 @@
 								<span class="separator sep-2"></span>
 								
 								<div class="jp-quality">
-									<a class="quality-btn" q="lo" href="#">low</a>
-									<a class="quality-btn" q="me" href="#" style="display:none">med</a>
+									<a class="quality-btn" q="lo" href="#" style="display:none">low</a>
+									<a class="quality-btn" q="me" href="#">med</a>
 									<a class="quality-btn" q="hi" href="#" style="display:none">high</a>
 									<a class="quality-btn" q="hd" href="#" style="display:none">HD</a>
 								</div>
@@ -87,7 +87,7 @@
 			</div>
 
 			
-
+			<div id="fade-top" class="fader"></div>
 			<div id="transcript-content" class="body row scroll-y">
 			<div id="main-loader">loading transcript</div>
 			</div>
@@ -96,8 +96,8 @@
 				<p></p>
 				<div id="chart">
 				</div>
-				<div style="height:50px;font-size:12px;padding:0 0 0 16px">
-				  <table class="table-bar" style="width:720px;padding:0px" cellspacing="0" cellpadding="0">
+				<div class="table-hldr">
+				  <table class="table-bar" cellspacing="0" cellpadding="0">
 				    <tr>
 				      <td>5</td>
 				      <td>10</td>
@@ -123,9 +123,14 @@
 				  </table>
 				</div>
 			</div>
+			<div id="fade-bot" class="fader"></div>
 			<div class="mini-footer row">
 			</div>
-			<div class="credits row"></div>
+			<div class="credits row">
+				<div id="sponsor">
+					<div>Transcript by</div> <a href="http://www.3playmedia.com" target="_blank"><img src="3playmedialogo.png" /></a>
+				</div>
+			</div>
 		</div>
 
 		<!-- target content -->
@@ -181,15 +186,18 @@
 							</tr>
 						</table>
 						<!--<div id="pie-talk"></div>-->
-						<div style="height:120px" id="pie-chart"><span style="line-height:100px">Loading ...</span></div>
+						<div id="pie-chart"><span>Loading ...</span></div>
 					</div>
 
 					<div class="right-panel">
 						<div class="panel-title">
 							Share
 						</div>
-						<div class="share-snippet">Highlight a section of the transcript to clip and share that video snippet.	</div>
-						<div id="tweet-like">
+						<div class="share-snippet">Highlight a section of the transcript to clip and share that video snippet.</div>
+						<!--<a href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.aljazeera.com/indepth/interactive/2012/10/20121049528478583.html?s=393">share</a>-->
+						<div class="social-hldr">
+							<div id="tweet-like"></div>
+							<a id="fb-link" style="display:none" href="" target="_blank"><img src="facebook.png"></a>
 						</div>
 					</div>
 

@@ -12,6 +12,10 @@
 
 $(document).ready(function(){   
 
+	var demCandPrefix = "BARACK OBAMA:";
+	var repCandPrefix = "MITT ROMNEY:";
+	var moderatorPrefix = "JIM LEHRER:"
+
 	var locationUrl = (window.location != window.parent.location) ? document.referrer: document.location;
 	var hashTag = "#debates #election2012";
 
@@ -358,6 +362,7 @@ $(document).ready(function(){
 
 		$('#transcript').delegate('span','click',function(e){ 
 			playSource = true; 
+			endTime = null;
 			var jumpTo = $(this).attr('m')/1000; 
 			myPlayer.jPlayer("play",jumpTo);  
 			$('#play-btn-source').hide();
@@ -393,19 +398,31 @@ $(document).ready(function(){
 		function initPopcorn(id) {   
 			var p = Popcorn(id)
 			.code({
-			   start: 0,
-		       end: 2000,
-		       onStart: function (options) {
+			  start: 0,
+		    onStart: function (options) {
 		         //console.log('start')
-		       },
-		       onFrame: (function () {
+		     },
+		     onFrame: (function () {
+
+
 
 				// Warning: This might start polling before the transcript is loaded and ready.
 
 		        var count = 0;
+		        
 		        return function (options) {
+
+		       	//console.log('here');
 					
-            var now = this.Popcorn.instances[0].media.currentTime*1000;   
+            var now = this.Popcorn.instances[0].media.currentTime*1000;  
+
+            //console.log("now="+now/100);
+            //console.log("end="+endTime); 
+
+            if (endTime && endTime < (now / 100) ) {
+            	myPlayer.jPlayer("pause");
+            	endTime = null;
+            }
 					
 						var src = "";
 
@@ -592,8 +609,8 @@ $(document).ready(function(){
 
 				var bodyRow = $('.body.row');
 				var bottom = parseInt(bodyRow.css('bottom').replace('px',''));
-				bodyRow.animate({bottom: bottom+1+'px'}, 100);
-				bodyRow.animate({bottom: bottom+'px'}, 100);
+				bodyRow.animate({bottom: bottom+1+'px'}, 500);
+				bodyRow.animate({bottom: bottom+'px'}, 500);
 
 				// end ugly chrome fix
 			};
@@ -699,15 +716,15 @@ $(document).ready(function(){
 			// Short and sweet      
 			
 			var s = Math.floor(parseInt(startSpan.getAttribute('m'))/100); 
-			//var e = Math.floor(parseInt(endSpan.getAttribute('m'))/100);   
+			var e = Math.floor(parseInt(endSpan.getAttribute('m'))/100);   
 			
 			// Make sure s < e
 			
-			/*/if (s > e) {
+			if (s > e) {
 				var temp = e;
 				e = s;
 				s = temp;
-			}*/
+			}
 			  
 			// Check that it isn't a single click ie endtime is not starttime   
 			// Also that tweetable is > 0 in length
@@ -724,12 +741,21 @@ $(document).ready(function(){
 					url = winLoc.substr(0,paramStart);
 				}
 			 
-				var theTweet = "'"+tweetable+"' "+url+"?s="+s+" "+hashTag;//+"&e="+e;  
+				var theTweet = "'"+tweetable+"' "+url+"?s="+s+"-"+e+" "+hashTag;//+"&e="+e;  
 				 
 				$('.share-snippet').empty();
 				$('.share-snippet').append(theTweet);  
 				$('#tweet-like').empty();
 				$('#tweet-like').append('<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script><a data-url="" data-text="'+theTweet+'" href="http://twitter.com/share?url=none&count=none" class="twitter-share-button">Tweet</a>');  
+				
+				// uncomment this line when we go live!
+				//url = "http://www.aljazeera.com/indepth/interactive/2012/10/20121049528478583.html";
+				var fbLink = "http://www.facebook.com/sharer.php?u="+url+"?s="+s+"-"+e;
+				$('#fb-link').attr('href',fbLink);
+				$('#fb-link').show();
+				
+
+				//http://www.facebook.com/sharer.php?s=100&p[title]=titlehere&p[url]=http://www.yoururlhere.com&p[summary]=yoursummaryhere&p[images][0]=http://www.urltoyourimage.com
 
 				_gaq.push(['_trackEvent', 'USElect', 'Tweet generated', 'Tweet content '+theTweet]);
 			} 
@@ -798,15 +824,15 @@ $(document).ready(function(){
 			speakerWords['m'] = 0;
 
 			$('#transcript-content p').each(function(i) {
-				if ($(this).children(':first').text().indexOf('BARACK OBAMA:') >= 0) {
+				if ($(this).children(':first').text().indexOf(repCandPrefix) >= 0) {
 					speakerWords['d'] = speakerWords['d'] + $(this).children().length;
 				}
 
-				if ($(this).children(':first').text().indexOf('MITT ROMNEY:') >= 0) {
+				if ($(this).children(':first').text().indexOf(demCandPrefix) >= 0) {
 					speakerWords['r'] = speakerWords['r'] + $(this).children().length;
 				}
 
-				if ($(this).children(':first').text().indexOf('MODERATOR:') >= 0) {
+				if ($(this).children(':first').text().indexOf(moderatorPrefix) >= 0) {
 					speakerWords['m'] = speakerWords['m'] + $(this).children().length;
 				}
 
@@ -823,7 +849,7 @@ $(document).ready(function(){
 		}
 
     function cleanWord(w) {
-    	return w.toLowerCase().replace(".","").replace(",","").replace("!","").replace("?","").replace("-","").replace("mitt romney: ","").replace("barack obama: ", "")
+    	return w.replace(demCandPrefix,"").replace(repCandPrefix,"").toLowerCase().replace(".","").replace(",","").replace("!","").replace("?","").replace("-","")
     }
 
     var hitsDetails;
@@ -874,12 +900,12 @@ $(document).ready(function(){
 						var wordElement = $(this).parent().children(':first');
 						var word = wordElement.text();
 
-						while (word.indexOf('BARACK OBAMA:') < 0 && word.indexOf('MITT ROMNEY:') < 0 && word.indexOf('JIM LEHRER:') < 0) {
+						while (word.indexOf(demCandPrefix) < 0 && word.indexOf(repCandPrefix) < 0 && word.indexOf(moderatorPrefix) < 0) {
 							wordElement = wordElement.parent().prev().children(':first');
 							word = wordElement.text();
 						}
 						
-						if (word.indexOf('BARACK OBAMA:') >= 0) {
+						if (word.indexOf(demCandPrefix) >= 0) {
 							speakers.push('d');
 							matches.push($(this).attr('m'));
 							demCount++;
@@ -891,7 +917,7 @@ $(document).ready(function(){
 							}
 						}
 
-						if (word.indexOf('MITT ROMNEY:') >= 0) {
+						if (word.indexOf(repCandPrefix) >= 0) {
 							speakers.push('r');
 							matches.push($(this).attr('m'));
 							repCount++;
@@ -968,12 +994,17 @@ $(document).ready(function(){
 				url = winLoc.substr(0,paramStart);
 			}
 			 
-			var theTweet = "How many times did they mention '"+searchStr+"'? "+url+"?k="+searchStr.replace(' ','%20')+" "+hashTag;//+"&e="+e;  
+			var keyword = searchStr.replace(' ','%20');
+			var theTweet = "How many times did they mention '"+searchStr+"'? "+url+"?k="+keyword+" "+hashTag;//+"&e="+e;  
 				 
 			$('.share-snippet').empty();
 			$('.share-snippet').append(theTweet);  
 			$('#tweet-like').empty();
-			$('#tweet-like').append('<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script><a data-url="" data-text="'+theTweet+'" href="http://twitter.com/share?url=x" class="twitter-share-button">Tweet</a>');  
+			$('#tweet-like').append('<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script><a data-url="" data-text="'+theTweet+'" href="http://twitter.com/share?url=none&count=none" class="twitter-share-button">Tweet</a>');  
+
+			var fbLink = "http://www.facebook.com/sharer.php?u="+url+"?k="+keyword;
+			$('#fb-link').attr('href',fbLink);
+			$('#fb-link').show();
 
 			$('.mini-footer').slideUp(function() {
 				$('.footer').slideDown(function() {
@@ -983,6 +1014,7 @@ $(document).ready(function(){
 					}
 				});
 				$('.body.row').animate({bottom: '164px'}, 500);
+				$('#fade-bot').animate({top: '644px'}, 500);
 				$('#transcript-inst-panel').fadeOut();
 			});
 			
@@ -991,11 +1023,28 @@ $(document).ready(function(){
 			return false;
 		});
 
+	  var endTime =  null;
+
 		function checkStartParam() {
-			if (getUrlVars()["s"] != null) {    
-				var s = parseInt(getUrlVars()["s"]);
+			var param = getUrlVars()["s"];
+			if ( param != null) {  
+				var sParam = null;
+				if ( param.indexOf('-') >= 0 ) {
+					sParam = param.substr(0, param.indexOf('-'));
+					var eParam = param.substr(param.indexOf('-')+1,param.length);
+					endTime = parseInt(eParam);
+					//console.log("endTime = "+endTime);
+				} else {
+					sParam = param;
+					endTime = null;
+				}
+
+				var s = parseInt(sParam);
+
+				//console.log("s = "+sParam);
+
 				myPlayer.jPlayer("play",s/10);    
-				_gaq.push(['_trackEvent', 'USElect', 'Start parameter', 'Triggered at '+s]);
+				_gaq.push(['_trackEvent', 'USElect', 'Start/End parameter', 'Triggered at '+s]);
 			}
 		}
 
