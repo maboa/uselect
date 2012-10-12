@@ -144,7 +144,7 @@ body { margin: 0; -webkit-text-size-adjust: 100%; }
 .body.row { top: 36px; bottom: 80px; }
 .footer.row { height: 120px; bottom: 40px;}
 .mini-footer { height: 30px; bottom: 50px;}
-.credits { height: 50px; bottom: 0px; background-color: #F9B72B;}
+.credits { height: 50px; bottom: 0px; background-color: #fff;}
 
 
 
@@ -295,7 +295,7 @@ body { margin: 0; -webkit-text-size-adjust: 100%; }
 }
 
 .credits.row {
-	text-align: right;
+	text-align: left;
 }
 
 .logos a{
@@ -362,4 +362,10 @@ body { margin: 0; -webkit-text-size-adjust: 100%; }
 	background-image: url('../fadeup.png');
 	top:724px;
 }
+
+.content-org {
+	padding-left: 48px;
+}
+
+
 

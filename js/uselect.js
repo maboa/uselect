@@ -12,9 +12,9 @@
 
 $(document).ready(function(){   
 
-	var demCandPrefix = "BARACK OBAMA:";
-	var repCandPrefix = "MITT ROMNEY:";
-	var moderatorPrefix = "JIM LEHRER:"
+	var demCandPrefix = "JOE BIDEN:";
+	var repCandPrefix = "PAUL RYAN:";
+	var moderatorPrefix = "MODERATOR:"
 
 	var locationUrl = (window.location != window.parent.location) ? document.referrer: document.location;
 	var hashTag = "#debates #election2012";
@@ -28,6 +28,8 @@ $(document).ready(function(){
 	var data = new Array(bars);
 
 	var maxData = 0;
+	var tPause = 0;
+
 
 	// NB: IE8 D3 support https://github.com/mbostock/d3/issues/619
 	// Added Sizzle and es5-shim, but fails silently in IE8.
@@ -239,7 +241,7 @@ $(document).ready(function(){
 		
 	var theScript = [];  
 	var mediaDirM = "http://bc05.ajnm.me/665003303001";
-	var mediaDirW = "http://webapps.aljazeera.net/aje/custom/debate/d1";
+	var mediaDirW = "http://webapps.aljazeera.net/aje/custom/debate/d2";
 	var transcriptDir = "transcripts";  
 
 	var videoM = new Array();
@@ -247,17 +249,17 @@ $(document).ready(function(){
 	
 	// mp4
 
-	videoM['lo'] = "665003303001_1876552616001_US-PRES-DEBATE-1.mp4";
-	videoM['me'] = "665003303001_1876562017001_US-PRES-DEBATE-1.mp4";
-	videoM['hi'] = "665003303001_1876577900001_US-PRES-DEBATE-1.mp4";
-	videoM['hd'] = "665003303001_1876552928001_US-PRES-DEBATE-1.mp4";
+	videoM['lo'] = "665003303001_1895622674001_VPDEBATE-SOT-02D-12.mp4";
+	videoM['me'] = "665003303001_1895628000001_VPDEBATE-SOT-02D-12.mp4";
+	videoM['hi'] = "665003303001_1895654326001_VPDEBATE-SOT-02D-12.mp4";
+	videoM['hd'] = "665003303001_1895612298001_VPDEBATE-SOT-02D-12.mp4";
 
 	// webm
 
-	videoW['lo'] = "debate.webm";
-	videoW['me'] = "debate.webm";
-	videoW['hi'] = "debate.webm";
-	videoW['hd'] = "debate.webm";
+	videoW['lo'] = "vpdebate.webm";
+	videoW['me'] = "vpdebate.webm";
+	videoW['hi'] = "vpdebate.webm";
+	videoW['hd'] = "vpdebate.webm";
 
 	var latency = 1000;
 
@@ -280,77 +282,6 @@ $(document).ready(function(){
 	$.jPlayer.timeFormat.showHour = true;
 
 	var i = 0;
-
-	// unused for now ...
-
-	if (theScriptState[i] != false) { 
-		 	while (theScriptState[i] != undefined) {
-				//loadFile(theScriptState[i].m); 
-                
-				// repeated code use loadFile with a callback 
-				
-
-				var timespan = {};
-				timespan.s = parseInt(theScriptState[i].s);
-				timespan.e = parseInt(theScriptState[i].e);  
-				timespan.m = theScriptState[i].m; 
-				
-				//var id = theScriptState[i].m;
-        var file = transcriptDir+'/'+timespan.m+'.htm'; 
-				var mediaMp4 = mediaDirM+'/'+timespan.m+'.mp4';
-				var mediaWebM = mediaDirW+'/'+timespan.m+'.webm';
-				
-				theScript.push(timespan);  
-
-				$.ajax({
-				  url: file,
-				  async: false,
-				  success: function(data) {  
-
-						//load success!!!     
-						initPopcorn('#' + myPlayer.data("jPlayer").internal.video.id);      
-
-						// load in the audio      
-
-				  	myPlayer.jPlayer("setMedia", {
-		        	m4v: mediaMp4,
-		        	webmv: mediaWebM
-		      	});
-
-						$.data(myPlayer,'mediaId',timespan.m);
-
-				  	$('#transcript-content').html(data); 
-
-						//$('.scroll-panel').jScrollPane(); 
-					
-						// We need to paste the appropriate parts in the target pane here     
- 
-						var thisSpan = $('#transcript-content span[m="'+timespan.s+'"]');     
-					      
-						var endFound = false;
- 
-					
-						var selectedStuff = $('<p i="'+i+'" s="'+timespan.s+'" e="'+timespan.e+'"  f="'+myPlayer.data('jPlayer').status.src+'">');
-					 
-						$('#target-content').append( selectedStuff ); 
-
-						while (endFound == false) {
-
-							$(thisSpan).clone().appendTo(selectedStuff);   
-							thisSpan = thisSpan.next();    
-							selectedStuff.append(' ');
-							if (thisSpan.attr('m') == timespan.e) endFound = true; 
-						} 
-
-						$('#target-content').append('</p>');       
-
-				  }
-				});
-
-				i++;  
-			} 
-		   
-		}  
    
 
 		// These events are fired as play time increments  
@@ -361,7 +292,8 @@ $(document).ready(function(){
 		// transcript links to audio
 
 		$('#transcript').delegate('span','click',function(e){ 
-			playSource = true; 
+			playSource = true;
+			tPause = 0; 
 			endTime = null;
 			var jumpTo = $(this).attr('m')/1000; 
 			myPlayer.jPlayer("play",jumpTo);  
@@ -409,6 +341,7 @@ $(document).ready(function(){
 				// Warning: This might start polling before the transcript is loaded and ready.
 
 		        var count = 0;
+		        var endedLoop = false;
 		        
 		        return function (options) {
 
@@ -426,36 +359,71 @@ $(document).ready(function(){
 					
 						var src = "";
 
+						if (endedLoop == true) {
+							index = 0;
+							endedLoop = false;
+							end = -1;
+							//console.log("e now="+now);
+							//console.log("e end="+end);
+							myPlayer.jPlayer("stop");
+						}
+
 						if (now > end && playSource == false) {   
 
-          		// myPlayer.jPlayer("pause"); // MJP: Looks like old code. Commented out.
+          		//myPlayer.jPlayer("pause"); // MJP: Looks like old code. Commented out.
 							index = parseInt(index);
 
 							// check for the end
 
-							if (theScript.length <= (index+1) && now > end) {
+							
+
+							if (theScript.length < (index+1) && now > end) {
 								myPlayer.jPlayer("pause");
+
+								//console.log("paused");
+
+								// check for loop
+
+								playsource = true;
+
+								if (getUrlVars()["l"] != null) {
+									endedLoop = true;
+								} else {
+									tPause = 0;
+								}
 							} 
 							
-							if (theScript.length > (index+1)) {  
+							if (theScript.length > index) {  
 
 								// moving to the next block in the target
 
-								index = index + 1;       
+								      
 
 								start = theScript[index].s;   
 								end = theScript[index].e;
 
+								//console.log(start);
+								//console.log(end);
+								//console.log(now);
+
 							
 								myPlayer.bind($.jPlayer.event.progress + ".fixStart", function(event) {
+									//console.log("p now="+now);
+									//console.log("p end="+end);
 									// Warning: The variable 'start' must not be changed before this handler is called.
 							    $(this).unbind(".fixStart"); 
+							    //console.log('log about to play from '+start);
 									$(this).jPlayer("play",start/1000);
+									index = index + 1; 
+									//end = theScript[index].e;
 								});     
 
 				
-								myPlayer.jPlayer("pause",start);   
-							}    
+								//myPlayer.jPlayer("pause",start);   
+							}  
+
+
+
 						}   
 		      }
 		    })(),
@@ -507,7 +475,7 @@ $(document).ready(function(){
 		});		
 
 		function initTranscript(p) {
-			console.log("initTranscript in "+(new Date()-startTimer));
+			//console.log("initTranscript in "+(new Date()-startTimer));
 			$("#transcript-content span").each(function(i) {  
 				// doing p.transcript on every word is a bit inefficient - wondering if there is a better way
 				p.transcript({
@@ -519,7 +487,7 @@ $(document).ready(function(){
 					}
 				});  
 			});
-			console.log("initTranscript out "+(new Date()-startTimer));
+			//console.log("initTranscript out "+(new Date()-startTimer));
 		}
 
 		// Reviewed recursively async adding the plugins to avoid lock up at start.
@@ -547,6 +515,8 @@ $(document).ready(function(){
 		}
 
 		$('rect,text').live('click',function(e){
+			playSource = true;
+			tPause = 0;
 			var top = $('#chart').offset().top;
 			var height = $('#chart').height();
 			var piece = (maxData-1) - (Math.floor((e.clientY-top) / (height/maxData)));
@@ -574,6 +544,9 @@ $(document).ready(function(){
 		var startTimer = new Date();
 
 		function loadFile(id) { 
+
+			checkEasterParam();
+
 			$('#main-loader').append('.');
 			var file = transcriptDir+'/'+id+'.htm'; 
 
@@ -583,11 +556,11 @@ $(document).ready(function(){
 			currentlyPlaying = id;
 
 			var p, busySeekId, busyWaitId, delayBusy = 250, loadTrans = function() {
-				console.log("loadTrans in "+(new Date()-startTimer));
+				//console.log("loadTrans in "+(new Date()-startTimer));
 				$('#load-status').html('loading ...');
 
 				$('#transcript-content').load(file, function() {
-					console.log("loaded Transcript "+(new Date()-startTimer));
+					//console.log("loaded Transcript "+(new Date()-startTimer));
 				  	//load success!!!     
 					initTranscript(p);
 
@@ -599,11 +572,12 @@ $(document).ready(function(){
 
 					checkStartParam();
 					checkKeywordParam();
+
 					//$('.jp-video-busy').show();
 					//$('#transcript').animate({scrollTop: $("#page").offset().top}, 2000);
 			
 				});
-				console.log("loadTrans out "+(new Date()-startTimer));
+				//console.log("loadTrans out "+(new Date()-startTimer));
 
 				// ugly chrome fix to stop scroll-bar disappearing
 
@@ -688,6 +662,9 @@ $(document).ready(function(){
 
 
 		$('#transcript-content').mouseup(function(e){     
+
+			playSource = true;
+			tPause = 0;
 			
 			var s = 0, e = 0;
 	 		var select = getSelText(); 
@@ -807,6 +784,8 @@ $(document).ready(function(){
 
 		$("#searchStr").keydown(function(e) {
     	if(e.which == 13) {
+    		playSource = true;
+    		tPause = 0;
     		$('#search-btn').trigger('click');
         return false;
     	}
@@ -815,7 +794,7 @@ $(document).ready(function(){
 		var speakerWords = [];
 
 		function countWords() {
-			console.log("countWords in "+(new Date()-startTimer));
+			//console.log("countWords in "+(new Date()-startTimer));
 			var wordData = [];
 			var speaker = "";
 			var numWords = 0;
@@ -832,9 +811,9 @@ $(document).ready(function(){
 					speakerWords['r'] = speakerWords['r'] + $(this).children().length;
 				}
 
-				if ($(this).children(':first').text().indexOf(moderatorPrefix) >= 0) {
+				/*if ($(this).children(':first').text().indexOf(moderatorPrefix) >= 0) {
 					speakerWords['m'] = speakerWords['m'] + $(this).children().length;
-				}
+				}*/
 
 				//console.log('length='+$(this).children().length);
 			});
@@ -845,7 +824,7 @@ $(document).ready(function(){
 
 			$('#repWords').text(speakerWords['r']+" words");
 			$('#demWords').text(speakerWords['d']+" words");
-			console.log("countWords out "+(new Date()-startTimer));
+			//console.log("countWords out "+(new Date()-startTimer));
 		}
 
     function cleanWord(w) {
@@ -854,7 +833,13 @@ $(document).ready(function(){
 
     var hitsDetails;
 
-		$('#search-btn').click(function(){   
+		$('#search-btn').click(function(e){   
+
+			if (e.originalEvent instanceof MouseEvent) {
+				console.log('cleared');
+				playSource = true;
+				tPause = 0;
+			}
 
 			hitsDetails = [];
 
@@ -892,8 +877,9 @@ $(document).ready(function(){
 						var thisWord = $(this);
 						var timeSpan = {};
 						timeSpan.s = parseInt($(this).attr('m'));
-						//timeSpan.e = parseInt($(this).attr('m'))+1000;
-						//theScript.push(timeSpan); 
+						timeSpan.e = parseInt($(this).attr('m'))+parseInt(tPause);
+						//console.log('tp='+tPause);
+						
 
 						/*establish the speaker*/
 
@@ -915,6 +901,7 @@ $(document).ready(function(){
 									thisWord = thisWord.next();
 								}	
 							}
+							theScript.push(timeSpan); 
 						}
 
 						if (word.indexOf(repCandPrefix) >= 0) {
@@ -927,6 +914,7 @@ $(document).ready(function(){
 									thisWord = thisWord.next();
 								}	
 							}
+							theScript.push(timeSpan); 
 						}
 
 						/*if (word.indexOf('JIM LEHRER:') >= 0) {
@@ -935,11 +923,7 @@ $(document).ready(function(){
 					}
 				}
 
-				// uncomment below to activate search term playback
-				
-				/*playSource = false;
-				end = -1;
-				index = 0;*/		
+
 			});
 
 			var hits = new Array(bars);
@@ -1017,6 +1001,16 @@ $(document).ready(function(){
 				$('#fade-bot').animate({top: '644px'}, 500);
 				$('#transcript-inst-panel').fadeOut();
 			});
+
+			// uncomment below to activate search term playback
+				
+			if (tPause > 0) {	
+				//console.log('tPause='+tPause);
+				playSource = false;
+				end = -1;
+				index = 0;
+			}
+			//console.dir(theScript);
 			
 			_gaq.push(['_trackEvent', 'USElect', 'Search ', 'Keyword(s) ='+searchStr]);
 
@@ -1058,6 +1052,18 @@ $(document).ready(function(){
 			}
 		}
 
+
+
+		function checkEasterParam() {
+			if (getUrlVars()["t"] != null) {    
+				var t = getUrlVars()["t"];
+				if (t != null) {
+					tPause = t;
+				}
+				_gaq.push(['_trackEvent', 'USElect', 'Easter parameter', 'Triggered with '+t]);
+			}
+		}
+
 		function getUrlVars() {
 			var vars = [], hash;
 			var myWindow = window;
@@ -1078,5 +1084,6 @@ $(document).ready(function(){
 	  }  
 
 		$('#main-loader').append('.');
+
 		
 });    
