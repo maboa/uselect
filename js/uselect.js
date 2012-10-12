@@ -16,6 +16,8 @@ $(document).ready(function(){
 	var repCandPrefix = "PAUL RYAN:";
 	var moderatorPrefix = "MODERATOR:"
 
+	var fbTitle = "Biden vs Ryan: Interactive video transcript";
+
 	var locationUrl = (window.location != window.parent.location) ? document.referrer: document.location;
 	var hashTag = "#debates #election2012";
 
@@ -407,16 +409,16 @@ $(document).ready(function(){
 								//console.log(now);
 
 							
-								myPlayer.bind($.jPlayer.event.progress + ".fixStart", function(event) {
+								//myPlayer.bind($.jPlayer.event.progress + ".fixStart", function(event) {
 									//console.log("p now="+now);
 									//console.log("p end="+end);
 									// Warning: The variable 'start' must not be changed before this handler is called.
-							    $(this).unbind(".fixStart"); 
+							   // $(this).unbind(".fixStart"); 
 							    //console.log('log about to play from '+start);
-									$(this).jPlayer("play",start/1000);
+									myPlayer.jPlayer("play",start/1000);
 									index = index + 1; 
 									//end = theScript[index].e;
-								});     
+								//});     
 
 				
 								//myPlayer.jPlayer("pause",start);   
@@ -573,6 +575,8 @@ $(document).ready(function(){
 					checkStartParam();
 					checkKeywordParam();
 
+					myPlayer.jPlayer("volume", 1); // max volume
+
 					//$('.jp-video-busy').show();
 					//$('#transcript').animate({scrollTop: $("#page").offset().top}, 2000);
 			
@@ -727,7 +731,8 @@ $(document).ready(function(){
 				
 				// uncomment this line when we go live!
 				//url = "http://www.aljazeera.com/indepth/interactive/2012/10/20121049528478583.html";
-				var fbLink = "http://www.facebook.com/sharer.php?u="+url+"?s="+s+"-"+e;
+				var fbLink = "http://www.facebook.com/sharer.php?s=100&p[title]="+fbTitle+"&p[url]="+url+"&p[summary]="+encodeURIComponent(tweetable);
+				//var fbLink = "http://www.facebook.com/sharer.php?u="+url+"?s="+s+"-"+e;
 				$('#fb-link').attr('href',fbLink);
 				$('#fb-link').show();
 				
@@ -986,7 +991,10 @@ $(document).ready(function(){
 			$('#tweet-like').empty();
 			$('#tweet-like').append('<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script><a data-url="" data-text="'+theTweet+'" href="http://twitter.com/share?url=none&count=none" class="twitter-share-button">Tweet</a>');  
 
-			var fbLink = "http://www.facebook.com/sharer.php?u="+url+"?k="+keyword;
+			//var fbLink = "http://www.facebook.com/sharer.php?u="+url+"?k="+keyword;
+
+			var fbLink = "http://www.facebook.com/sharer.php?s=100&p[title]="+fbTitle+"&p[url]="+url+"&p[summary]="+encodeURIComponent(theTweet);
+
 			$('#fb-link').attr('href',fbLink);
 			$('#fb-link').show();
 
