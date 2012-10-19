@@ -12,18 +12,31 @@
 
 $(document).ready(function(){   
 
-	var demCandPrefix = "JOE BIDEN:";
-	var repCandPrefix = "PAUL RYAN:";
-	var moderatorPrefix = "MODERATOR:"
+	// The prefix variables should always be populated
 
-	var fbTitle = "Biden vs Ryan: Interactive video transcript";
+	var demCandPrefix = "BARACK OBAMA:";
+	var repCandPrefix = "MITT ROMNEY:";
+	var moderatorPrefix = "CANDY CROWLEY:";
+	var audiencePrefix = "AUDIENCE:";
+
+
+
+	var fbTitle = "Obama vs Romney : Interactive video transcript";
 
 	var locationUrl = (window.location != window.parent.location) ? document.referrer: document.location;
+
 	var hashTag = "#debates #election2012";
 
 	var operaBarChartFix = true;
 
+	var searchDefault = "search transcript";
+
 	$('#searchStr').focus();
+	$('#searchStr').attr('value',searchDefault);
+	
+
+
+
 
 	$('#main-loader').append('.');
 	var bars = 40;
@@ -171,13 +184,13 @@ $(document).ready(function(){
 
 		var colorlist = ["#ffcccc", "#ccccff"];
 
-		if ($('#repCb:checked').val()) {
+		//if ($('#repCb:checked').val()) {
 			colorlist[0]="#dc3912";
-		}
+		//}
 
-		if($('#demCb:checked').val()) {
+		//if($('#demCb:checked').val()) {
 			colorlist[1]="#3366cc";	
-		}
+		//}
 
 		var paddingList = [1,-1];
 
@@ -243,7 +256,7 @@ $(document).ready(function(){
 		
 	var theScript = [];  
 	var mediaDirM = "http://bc05.ajnm.me/665003303001";
-	var mediaDirW = "http://webapps.aljazeera.net/aje/custom/debate/d2";
+	var mediaDirW = "http://webapps.aljazeera.net/aje/custom/debate/d3";
 	var transcriptDir = "transcripts";  
 
 	var videoM = new Array();
@@ -251,17 +264,17 @@ $(document).ready(function(){
 	
 	// mp4
 
-	videoM['lo'] = "665003303001_1895622674001_VPDEBATE-SOT-02D-12.mp4";
-	videoM['me'] = "665003303001_1895628000001_VPDEBATE-SOT-02D-12.mp4";
-	videoM['hi'] = "665003303001_1895654326001_VPDEBATE-SOT-02D-12.mp4";
-	videoM['hd'] = "665003303001_1895612298001_VPDEBATE-SOT-02D-12.mp4";
+	videoM['lo'] = "665003303001_1905567366001_DEBATE3-SOT-03D-17.mp4";
+	videoM['me'] = "665003303001_1905579071001_DEBATE3-SOT-03D-17.mp4";
+	videoM['hi'] = "665003303001_1905661386001_DEBATE3-SOT-03D-17.mp4";
+	videoM['hd'] = "665003303001_1905581731001_DEBATE3-SOT-03D-17.mp4";
 
 	// webm
 
-	videoW['lo'] = "vpdebate.webm";
-	videoW['me'] = "vpdebate.webm";
-	videoW['hi'] = "vpdebate.webm";
-	videoW['hd'] = "vpdebate.webm";
+	videoW['lo'] = "debate3.webm";
+	videoW['me'] = "debate3.webm";
+	videoW['hi'] = "debate3.webm";
+	videoW['hd'] = "debate3.webm";
 
 	var latency = 1000;
 
@@ -367,10 +380,13 @@ $(document).ready(function(){
 							end = -1;
 							//console.log("e now="+now);
 							//console.log("e end="+end);
-							myPlayer.jPlayer("stop");
+							myPlayer.jPlayer("pause");
+							//console.log('ended loop');
 						}
 
 						if (now > end && playSource == false) {   
+
+							//console.log('in');
 
           		//myPlayer.jPlayer("pause"); // MJP: Looks like old code. Commented out.
 							index = parseInt(index);
@@ -386,12 +402,13 @@ $(document).ready(function(){
 
 								// check for loop
 
-								playsource = true;
+								
 
 								if (getUrlVars()["l"] != null) {
 									endedLoop = true;
 								} else {
 									tPause = 0;
+									playSource = true;
 								}
 							} 
 							
@@ -585,10 +602,10 @@ $(document).ready(function(){
 
 				// ugly chrome fix to stop scroll-bar disappearing
 
-				var bodyRow = $('.body.row');
+				/*var bodyRow = $('.body.row');
 				var bottom = parseInt(bodyRow.css('bottom').replace('px',''));
 				bodyRow.animate({bottom: bottom+1+'px'}, 500);
-				bodyRow.animate({bottom: bottom+'px'}, 500);
+				bodyRow.animate({bottom: bottom+'px'}, 500);*/
 
 				// end ugly chrome fix
 			};
@@ -785,9 +802,19 @@ $(document).ready(function(){
 			return false;
 		});
 
-		/* test stuff */
+		$("#searchStr").click(function(e) {
+			if ($("#searchStr").val() == searchDefault) {
+				$("#searchStr").val('');
+				$('#searchStr').css('color','#000');
+			}
+		});
 
 		$("#searchStr").keydown(function(e) {
+			if ($("#searchStr").val() == searchDefault) {
+				$("#searchStr").val('');
+				$('#searchStr').css('color','#000');
+			}
+
     	if(e.which == 13) {
     		playSource = true;
     		tPause = 0;
@@ -807,33 +834,55 @@ $(document).ready(function(){
 			speakerWords['r'] = 0;
 			speakerWords['m'] = 0;
 
+			//var total = 0;
+
+			var speaking = null;
+
 			$('#transcript-content p').each(function(i) {
-				if ($(this).children(':first').text().indexOf(repCandPrefix) >= 0) {
-					speakerWords['d'] = speakerWords['d'] + $(this).children().length;
-				}
 
-				if ($(this).children(':first').text().indexOf(demCandPrefix) >= 0) {
-					speakerWords['r'] = speakerWords['r'] + $(this).children().length;
-				}
 
-				/*if ($(this).children(':first').text().indexOf(moderatorPrefix) >= 0) {
-					speakerWords['m'] = speakerWords['m'] + $(this).children().length;
-				}*/
+					if ($(this).children(':first').text().indexOf(demCandPrefix) >= 0) {
+						speaking = 'd';
+					} 
+
+					if ($(this).children(':first').text().indexOf(repCandPrefix) >= 0) {
+						speaking = 'r';
+					}
+
+					if ($(this).children(':first').text().indexOf(moderatorPrefix) >= 0) {
+						speaking = 'm';
+					}		
+
+					if ($(this).children(':first').text().indexOf(audiencePrefix) >= 0) {
+						speaking = 'a';
+					}		
+
+					speakerWords[speaking] = speakerWords[speaking] + $(this).children().length;
+
+
 
 				//console.log('length='+$(this).children().length);
+
+			 	//total = total + $(this).children().length;
 			});
+
+			/*console.log(total);
+			console.log(speakerWords['d']);
+			console.log(speakerWords['r']);
+			console.log(speakerWords['m']);
+			console.dir(speakerWords);*/
 
 			//console.dir(speakerWords);
 
 			updatePieChart(speakerWords['d'],speakerWords['r']);
 
-			$('#repWords').text(speakerWords['r']+" words");
-			$('#demWords').text(speakerWords['d']+" words");
+			$('#repWords').text(" - "+speakerWords['r']);
+			$('#demWords').text(" - "+speakerWords['d']);
 			//console.log("countWords out "+(new Date()-startTimer));
 		}
 
     function cleanWord(w) {
-    	return w.replace(demCandPrefix,"").replace(repCandPrefix,"").toLowerCase().replace(".","").replace(",","").replace("!","").replace("?","").replace("-","")
+    	return w.replace(demCandPrefix+" ","").replace(repCandPrefix+" ","").replace(".","").replace(",","").replace("!","").replace("?","").replace("-","").replace("-","").toLowerCase();
     }
 
     var hitsDetails;
@@ -841,7 +890,7 @@ $(document).ready(function(){
 		$('#search-btn').click(function(e){   
 
 			if (e.originalEvent instanceof MouseEvent) {
-				console.log('cleared');
+				//console.log('cleared');
 				playSource = true;
 				tPause = 0;
 			}
@@ -860,6 +909,7 @@ $(document).ready(function(){
 			$('#transcript-content span').each(function(i) {
 				//console.log($(this).text());
 				var searchWords = searchStr.split(" ");
+				//if (cleanWord($(this).text()).indexOf('jack') >=0 ) console.log(cleanWord($(this).text()));
 				if (searchWords[0] == cleanWord($(this).text())) {
 					
 					var matching = true;
@@ -900,12 +950,10 @@ $(document).ready(function(){
 							speakers.push('d');
 							matches.push($(this).attr('m'));
 							demCount++;
-							if($('#demCb:checked').val()) {
-								for (var w=0; w < searchWords.length; w++) {
-									thisWord.css('background-color','yellow');
-									thisWord = thisWord.next();
-								}	
-							}
+							for (var w=0; w < searchWords.length; w++) {
+								thisWord.css('background-color','yellow');
+								thisWord = thisWord.next();
+							}	
 							theScript.push(timeSpan); 
 						}
 
@@ -913,12 +961,10 @@ $(document).ready(function(){
 							speakers.push('r');
 							matches.push($(this).attr('m'));
 							repCount++;
-							if($('#repCb:checked').val()) {
-								for (var w=0; w < searchWords.length; w++) {
-									thisWord.css('background-color','yellow');
-									thisWord = thisWord.next();
-								}	
-							}
+							for (var w=0; w < searchWords.length; w++) {
+								thisWord.css('background-color','yellow');
+								thisWord = thisWord.next();
+							}	
 							theScript.push(timeSpan); 
 						}
 
@@ -968,8 +1014,8 @@ $(document).ready(function(){
 
       updatePieChart(demCount,repCount);
 
-      $('#repWords').text(repCount+" mentions");
-			$('#demWords').text(demCount+" mentions");
+      $('#repWords').text(" - "+repCount);
+			$('#demWords').text(" - "+demCount);
 
 			$('#pieTitle').text($('#searchStr').val());
 
@@ -983,8 +1029,8 @@ $(document).ready(function(){
 				url = winLoc.substr(0,paramStart);
 			}
 			 
-			var keyword = searchStr.replace(' ','%20');
-			var theTweet = "How many times did they mention '"+searchStr+"'? "+url+"?k="+keyword+" "+hashTag;//+"&e="+e;  
+			var keyword = searchStr.split(' ').join('%20');
+			var theTweet = "How often was '"+searchStr+"' mentioned? "+url+"?k="+keyword+" "+hashTag;//+"&e="+e;  
 				 
 			$('.share-snippet').empty();
 			$('.share-snippet').append(theTweet);  
@@ -1006,7 +1052,7 @@ $(document).ready(function(){
 					}
 				});
 				$('.body.row').animate({bottom: '164px'}, 500);
-				$('#fade-bot').animate({top: '644px'}, 500);
+				$('#fade-bot').animate({top: '544px'}, 500);
 				$('#transcript-inst-panel').fadeOut();
 			});
 
@@ -1053,7 +1099,7 @@ $(document).ready(function(){
 		function checkKeywordParam() {
 			if (getUrlVars()["k"] != null) {    
 				var s = getUrlVars()["k"];
-				s = s.replace('%20',' ');
+				s = s.split('%20').join(' ');
     		$('#searchStr').val(s);
     		$('#search-btn').trigger('click');
 				_gaq.push(['_trackEvent', 'USElect', 'Keyword parameter', 'Triggered at '+s]);
@@ -1072,6 +1118,7 @@ $(document).ready(function(){
 			}
 		}
 
+
 		function getUrlVars() {
 			var vars = [], hash;
 			var myWindow = window;
@@ -1079,6 +1126,13 @@ $(document).ready(function(){
 			if (parent) {
 				myWindow = parent.window;
 			}
+
+
+			//if (isAString(locationUrl) == false) {
+			if (typeof locationUrl != "string") {
+				locationUrl = locationUrl.href;
+			}
+
 
 			var hashes = locationUrl.slice(locationUrl.indexOf('?') + 1).split('&');
 			for(var i = 0; i < hashes.length; i++)
@@ -1090,6 +1144,15 @@ $(document).ready(function(){
 
 	    return vars;
 	  }  
+
+	  $('.thumb-link').click(function(){
+	  	myPlayer.jPlayer('play',$(this).attr('data-start')/10);
+	  	endTime = $(this).attr('data-end');
+	  	playSource = true;
+			tPause = 0;
+			_gaq.push(['_trackEvent', 'USElect', 'Dont Miss', 'Triggered with '+$(this).attr('data-start')]);
+	  	return false;
+	  });
 
 		$('#main-loader').append('.');
 
